@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/TalonTesting.meta
 guid: fcc7d02745f4aca4992295d5acaff320
+=======
+guid: bc324ef3ddbac814fb6e0cd1b84964d9
+>>>>>>> 13bb8fc0e382000007762c16bce9efe773cc12a7:Assets/Prefabs.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
