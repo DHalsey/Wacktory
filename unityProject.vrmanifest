@@ -1,0 +1,15 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.cmpm_170_proto_2.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "strings": {
+        "en_us": {
+          "name": "CMPM_170_Proto_2 [Testing]"
+        }
+      }
+    }
+  ]
+}
