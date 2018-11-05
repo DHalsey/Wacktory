@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class movement : MonoBehaviour {
+public class talon_movement : MonoBehaviour {
 
     public int speed = 4;
 
@@ -13,6 +13,7 @@ public class movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // UP, DOWN, LEFT, RIGHT movement controlls
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.position += Vector3.left * speed * Time.deltaTime;
