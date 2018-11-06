@@ -5,47 +5,55 @@ using UnityEngine;
 public class talon_buttonTrigger : MonoBehaviour {
 
     GameObject btn;
+
     float btnX, btnY, btnZ;
-    float btnMovementAmt = 0.17f;
+    float btnR, btnG, btnB;
+    float btnBaseR, btnBaseG, btnBaseB;
+
+    public float btnPressAmt = 0.17f;
+
+    public Color btnColor, btnBaseColor = new Color();
 
     // Use this for initialization
     void Start ()
     {
+        // Needed for accessing the currnet button
         btn = gameObject;
 
-        btn.GetComponent<Renderer>().material.color = new Color(0.95f, 0.5f, 0.5f);
-
+        // Setting button presser and button base color
+        btn.transform.parent.gameObject.GetComponent<Renderer>().material.color = btnBaseColor;
+        btn.GetComponent<Renderer>().material.color = btnColor;
 
         btnX = btn.transform.position.x;
         btnY = btn.transform.position.y;
         btnZ = btn.transform.position.z;
-
-        Debug.Log("btnX: " + btnX + " btnY: " + btnY + " btnZ: " + btnZ);
     }
 
     // When triggered, button will press in towards the floor
     private void OnTriggerEnter(Collider other)
     {
-        btn.GetComponent<Renderer>().material.color = new Color(0.8f, 0.5f, 0.5f);
-
         Debug.Log(other.name + " entered " + gameObject.name + " trigger");
 
-        btnY -= btnMovementAmt;
-        transform.position = new Vector3(btnX, btnY, btnZ);
+        // Slightly changing color to show button is pressed
+        btn.GetComponent<Renderer>().material.color = new Color(btnColor.r * 0.7f, btnColor.g * 0.7f, btnColor.b * 0.7f);
+
+        // Translating button down, because it's being pressed
+        transform.position = new Vector3(btnX, btnY - btnPressAmt, btnZ);
     }
 
+    // Will run as long as object is in button trigger
     private void OnTriggerStay(Collider other)
     {
 
     }
+
     // When triggered, button will release; reutrning to original height
     private void OnTriggerExit(Collider other)
     {
-        btn.GetComponent<Renderer>().material.color = new Color(0.95f, 0.5f, 0.5f);
+        btn.GetComponent<Renderer>().material.color = new Color(btnColor.r, btnColor.g, btnColor.b);
 
         Debug.Log(other.name + " exited " + gameObject.name + " trigger");
-
-        btnY += btnMovementAmt;
+        
         transform.position = new Vector3(btnX, btnY, btnZ);
     }
 
