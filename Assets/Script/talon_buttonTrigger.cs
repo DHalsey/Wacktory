@@ -13,6 +13,9 @@ public class talon_buttonTrigger : MonoBehaviour {
     {
         btn = gameObject;
 
+        btn.GetComponent<Renderer>().material.color = new Color(0.95f, 0.5f, 0.5f);
+
+
         btnX = btn.transform.position.x;
         btnY = btn.transform.position.y;
         btnZ = btn.transform.position.z;
@@ -23,6 +26,8 @@ public class talon_buttonTrigger : MonoBehaviour {
     // When triggered, button will press in towards the floor
     private void OnTriggerEnter(Collider other)
     {
+        btn.GetComponent<Renderer>().material.color = new Color(0.8f, 0.5f, 0.5f);
+
         Debug.Log(other.name + " entered " + gameObject.name + " trigger");
 
         btnY -= btnMovementAmt;
@@ -36,6 +41,8 @@ public class talon_buttonTrigger : MonoBehaviour {
     // When triggered, button will release; reutrning to original height
     private void OnTriggerExit(Collider other)
     {
+        btn.GetComponent<Renderer>().material.color = new Color(0.95f, 0.5f, 0.5f);
+
         Debug.Log(other.name + " exited " + gameObject.name + " trigger");
 
         btnY += btnMovementAmt;
