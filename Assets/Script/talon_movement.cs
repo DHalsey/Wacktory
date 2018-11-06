@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class talon_movement : MonoBehaviour {
 
-    public int speed = 4;
+    public float speed = 4.0f;
+    public bool isDead = false;
+    public Random rnd;
+
+    public Rigidbody rb;
 
     // Use this for initialization
     void Start () {
-
+        rb = GetComponent<Rigidbody>();
     }
 	
-	// Update is called once per frame
-	void Update () {
+    public void killPlayer()
+    {
+        // Killing player, setting speed to very slow, laying pill on side
+        isDead = true;
+        speed = 0.5f;
+
+        // Dampen towards the target rotation
+        transform.rotation = new Quaternion(0.0f, 0.0f, 90.0f, 0.0f);
+
+        rb.velocity = new Vector3(Random.Range(2.0f, 7.0f), 0, Random.Range(2.0f, 7.0f));
+
+    }
+
+    public void setSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    // Update is called once per frame
+    void Update() {
+        
         // UP, DOWN, LEFT, RIGHT movement controlls
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -30,5 +53,6 @@ public class talon_movement : MonoBehaviour {
         {
             transform.position += Vector3.back * speed * Time.deltaTime;
         }
+       
 	}
 }
