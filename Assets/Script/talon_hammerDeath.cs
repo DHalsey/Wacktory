@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class talon_hammerDeath : MonoBehaviour {
 
+    public GameObject player; 
     public talon_movement talMovScriptCall;
 
 	// Use this for initialization
 	void Start () {
-		
+        talMovScriptCall = player.GetComponent<talon_movement>();
 	}
 	
     // When triggered, player is in hammer head and needs to die..

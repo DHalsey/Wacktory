@@ -24,7 +24,7 @@ public class talon_movement : MonoBehaviour {
         // Dampen towards the target rotation
         transform.rotation = new Quaternion(0.0f, 0.0f, 90.0f, 0.0f);
 
-        rb.velocity = new Vector3(Random.Range(2.0f, 7.0f), 0, Random.Range(2.0f, 7.0f));
+        rb.AddForce(new Vector3(Random.Range(-1000.0f, 1000.0f), 0, Random.Range(-1000.0f, 1000.0f)));
 
     }
 
