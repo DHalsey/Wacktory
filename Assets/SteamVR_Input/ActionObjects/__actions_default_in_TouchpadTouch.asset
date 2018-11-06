@@ -8,10 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02b1c930c612dbc469d258783cb8be34, type: 3}
-  m_Name: __actions_default_in_Squeeze
+  m_Script: {fileID: 11500000, guid: 31ab55ded67f66140977a544d93962ab, type: 3}
+  m_Name: __actions_default_in_TouchpadTouch
   m_EditorClassIdentifier: 
   changeTolerance: 0.000001
-  fullPath: /actions/default/in/Squeeze
+  fullPath: /actions/default/in/TouchpadTouch
   actionSet: {fileID: 11400000, guid: c7884afc3ffd4104e951094c5ecdd16b, type: 2}
   direction: 0

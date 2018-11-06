@@ -31,9 +31,9 @@
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/default/in/Squeeze",
-      "type": "vector1",
-      "requirement": "optional"
+      "name": "/actions/default/in/TouchpadTouch",
+      "type": "vector2",
+      "requirement": "suggested"
     },
     {
       "name": "/actions/default/out/Haptic",
