@@ -8,14 +8,26 @@ public class couchPlayerMovement : MonoBehaviour {
     public float moveSpeed = 5.0f;
     public float turnSpeed = 4.0f;
 
+    public float playerMoveTime = 0.3f;
+
+    private GameObject player;
+
     private string verticalAxisName;
     private string horizontalAxisName;
     private Vector3 movementInput;
-    private Rigidbody rb;
+    private Rigidbody rbRig;
+    private Rigidbody rbPlayer;
+
+    private Vector3 playerVelocity;
+
+    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        player = transform.parent.gameObject;
+        rbPlayer = player.GetComponent<Rigidbody>();
+        rbRig = GetComponent<Rigidbody>();
+        
     }
 
     // Use this for initialization
@@ -31,13 +43,18 @@ public class couchPlayerMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        Move();
-        Turn();
+        MoveRig();
+        MovePlayer();
     }
 
-    private void Move()
+    private void MoveRig()
     {
-        rb.MovePosition(rb.position + Vector3.ClampMagnitude(movementInput, moveSpeed) * Time.deltaTime);
+        rbRig.MovePosition(rbRig.position + Vector3.ClampMagnitude(movementInput, moveSpeed) * Time.deltaTime);
+    }
+
+    private void MovePlayer()
+    {
+        rbPlayer.MovePosition(Vector3.SmoothDamp(rbPlayer.position, rbRig.position, ref playerVelocity, playerMoveTime));
     }
 
     private void Turn()
@@ -58,4 +75,5 @@ public class couchPlayerMovement : MonoBehaviour {
         //transform.forward = Vector3.RotateTowards(transform.forward, transform.position + rotateVelocity, turnSpeed * Time.deltaTime, 0f);
         
     }
+   
 }

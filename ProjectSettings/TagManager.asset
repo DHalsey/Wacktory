@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CouchPlayers
+  - CouchPlayerRigs
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
+  - CouchPlayerLayer
+  - CouchPlayerRigLayer
   - 
   - 
   - 
