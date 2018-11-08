@@ -29,13 +29,15 @@ public class couchPlayerMovement : MonoBehaviour {
     }
 
     // Use this for initialization
-    private void Start () {
+    private void Start()
+    {
         verticalAxisName = "Vertical" + playerNumber;
         horizontalAxisName = "Horizontal" + playerNumber;
 	}
 	
 	// Update is called once per frame
-	private void Update () {
+	private void Update()
+    {
         movementInput = new Vector3(Input.GetAxis(horizontalAxisName), 0, Input.GetAxis(verticalAxisName)) * moveSpeed;
     }
 
