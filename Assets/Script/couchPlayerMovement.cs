@@ -20,8 +20,6 @@ public class couchPlayerMovement : MonoBehaviour {
 
     private Vector3 playerVelocity;
 
-    private Vector3 velocity = Vector3.zero;
-
     private void Awake()
     {
         player = transform.parent.gameObject;
@@ -31,13 +29,13 @@ public class couchPlayerMovement : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
         verticalAxisName = "Vertical" + playerNumber;
         horizontalAxisName = "Horizontal" + playerNumber;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
         movementInput = new Vector3(Input.GetAxis(horizontalAxisName), 0, Input.GetAxis(verticalAxisName)) * moveSpeed;
     }
 
@@ -45,6 +43,7 @@ public class couchPlayerMovement : MonoBehaviour {
     {
         MoveRig();
         MovePlayer();
+        RotatePlayer();
     }
 
     private void MoveRig()
@@ -57,23 +56,15 @@ public class couchPlayerMovement : MonoBehaviour {
         rbPlayer.MovePosition(Vector3.SmoothDamp(rbPlayer.position, rbRig.position, ref playerVelocity, playerMoveTime));
     }
 
-    private void Turn()
+    private void RotatePlayer()
     {
-        //Vector3 moveDirection = rb.velocity.normalized;
-        //float angle = Vector3.Angle(rb.transform.position, moveDirection);
-        //Vector3 cross = Vector3.Cross(rb.transform.position, moveDirection);
+        Vector3 targetDirection = new Vector3(rbRig.position.x - rbPlayer.position.x, 0f, rbRig.position.z - rbPlayer.position.z);
 
-        //if (cross.z > 0)
-        //{
-        //    angle = 360 - angle;
-        //}
+        float step = turnSpeed * Time.deltaTime;
 
-        //Quaternion quat = Quaternion.Euler(0f, 0f, angle);
+        Vector3 newDirection = Vector3.RotateTowards(player.transform.forward, targetDirection, step, 0f);
 
-        //rb.MoveRotation(quat);
-
-        //transform.forward = Vector3.RotateTowards(transform.forward, transform.position + rotateVelocity, turnSpeed * Time.deltaTime, 0f);
-        
+        rbPlayer.rotation = Quaternion.LookRotation(newDirection);
     }
    
 }
