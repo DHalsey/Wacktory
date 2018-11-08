@@ -3,70 +3,128 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class couchPlayerMovement : MonoBehaviour {
-
+    
     public int playerNumber = 1;
     public float moveSpeed = 5.0f;
     public float turnSpeed = 4.0f;
-
-    public float playerMoveTime = 0.3f;
-
-    private GameObject player;
-
+    public float friction = 10.0f;
+    public float gravity = 4.0f;
+    public float jumpForce = 10.0f;
+    
     private string verticalAxisName;
     private string horizontalAxisName;
     private Vector3 movementInput;
-    private Rigidbody rbRig;
-    private Rigidbody rbPlayer;
+    private Rigidbody rb;
+    private bool isGrounded;
 
-    private Vector3 playerVelocity;
+    private Quaternion turnAngle = new Quaternion();
 
     private void Awake()
     {
-        player = transform.parent.gameObject;
-        rbPlayer = player.GetComponent<Rigidbody>();
-        rbRig = GetComponent<Rigidbody>();
-        
+        rb = GetComponent<Rigidbody>();
+        isGrounded = false;
     }
-
-    // Use this for initialization
+   
     private void Start()
     {
         verticalAxisName = "Vertical" + playerNumber;
         horizontalAxisName = "Horizontal" + playerNumber;
 	}
 	
-	// Update is called once per frame
 	private void Update()
     {
-        movementInput = new Vector3(Input.GetAxis(horizontalAxisName), 0, Input.GetAxis(verticalAxisName)) * moveSpeed;
+        movementInput = new Vector3(Input.GetAxisRaw(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.name == "Ground")
+        {
+            isGrounded = true;
+        }
     }
 
     private void FixedUpdate()
     {
-        MoveRig();
         MovePlayer();
-        RotatePlayer();
+        TurnPlayer();
+        ApplyGravity();
+
+        if (isGrounded)
+        {
+            ApplyFriction();
+        }
     }
 
-    private void MoveRig()
+    // Thanks for this insane trigonometry, Dustin
+    // ---------------------------------------------------------------------------
+    float calculateAngle(float x, float y)
     {
-        rbRig.MovePosition(rbRig.position + Vector3.ClampMagnitude(movementInput, moveSpeed) * Time.deltaTime);
+        float angle = 0;
+        if (x > 0 && y == 0)
+        { //prevents divide by zero for perfect 90* angle
+            angle = 90.0f;
+        }
+        else if (x < 0 && y == 0)
+        { //prevents divide by zero for perfect -90* angle
+            angle = -90.0f;
+        }
+        else if (x != 0 && y != 0)
+        { //if the stick isnt rested, handle normal turnng
+            angle = Mathf.Rad2Deg * Mathf.Atan(x / y);
+            if (y < 0)
+            {
+                angle += 180; //handles -y rotations since tan is [-PI/2,PI/2]
+            }
+        }
+        else if (x == 0 && y < 0)
+        {
+            angle = 180;
+        }
+        if (angle > 180)
+        {
+            angle -= 360;
+        }
+        return angle;
     }
+    // ----------------------------------------------------------------------------
 
     private void MovePlayer()
     {
-        rbPlayer.MovePosition(Vector3.SmoothDamp(rbPlayer.position, rbRig.position, ref playerVelocity, playerMoveTime));
+        Vector3 rbVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        if ((rbVelocity + movementInput).magnitude < moveSpeed / 10 || (rbVelocity + movementInput).magnitude < rbVelocity.magnitude)
+        {
+            rb.AddForce(movementInput * moveSpeed);
+        }
     }
 
-    private void RotatePlayer()
+    private void TurnPlayer()
     {
-        Vector3 targetDirection = new Vector3(rbRig.position.x - rbPlayer.position.x, 0f, rbRig.position.z - rbPlayer.position.z);
+        if (movementInput.magnitude > 0f)
+        {
+            float angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
+            turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
+        }
 
-        float step = turnSpeed * Time.deltaTime;
-
-        Vector3 newDirection = Vector3.RotateTowards(player.transform.forward, targetDirection, step, 0f);
-
-        rbPlayer.rotation = Quaternion.LookRotation(newDirection);
+        transform.rotation = Quaternion.Lerp(transform.rotation, turnAngle, turnSpeed);
     }
-   
+
+    private void ApplyFriction()
+    {
+        rb.AddForce(-rb.velocity.normalized * friction * Time.deltaTime, ForceMode.Acceleration);
+    }
+
+    private void ApplyGravity()
+    {
+        rb.AddForce(Vector3.down * 9.81f * gravity);
+    }
+    
+    // TODO: Handle jump input and call this function
+    private void Jump()
+    {
+        if (isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce);
+        }
+    }
 }
