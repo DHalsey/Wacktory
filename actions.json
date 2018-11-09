@@ -40,6 +40,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/GrabTrigger",
+      "type": "vector1"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -118,7 +122,8 @@
       "/actions/platformer/in/Move": "Move",
       "/actions/platformer/in/Jump": "Jump",
       "/actions/default/in/TouchpadTap": "Touchpad Tap",
-      "/actions/default/in/TouchpadTouch": "Touchpad Touch"
+      "/actions/default/in/TouchpadTouch": "Touchpad Touch",
+      "/actions/default/in/GrabTrigger": "Grab Trigger"
     }
   ]
 }
