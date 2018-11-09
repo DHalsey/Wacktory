@@ -21,13 +21,13 @@ public class conveyorMove : MonoBehaviour {
         
 	}
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.GetComponent<Rigidbody>()) {
+        if (other.gameObject.GetComponent<Rigidbody>()) { //if it has a rigidbody, grab it
             rbList.Add(other.gameObject.GetComponent<Rigidbody>());
         }
     }
     private void OnTriggerStay(Collider other) {
         foreach (Rigidbody rb in rbList) {
-            if (rb.gameObject.transform) {
+            if (rb && rb.gameObject && rb.gameObject.transform) {
                 if (!rb.isKinematic) { //move only if the object is not picked up
                     rb.MovePosition(rb.gameObject.transform.position + forceDirection * force * Time.deltaTime);
                 }            

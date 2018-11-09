@@ -14,6 +14,8 @@ public class vrPickupObject : MonoBehaviour {
     private Collider playerCollider; //the collider of the player
     private Vector3 lastPosition;
     private Vector3 lastRotation;
+    private List<Vector3> previousPositions = new List<Vector3>();
+    private List<Vector3> previousRotations = new List<Vector3>();
 
     void Start () {
         triggerPull = SteamVR_Input._default.inActions.GrabTrigger;
@@ -25,15 +27,19 @@ public class vrPickupObject : MonoBehaviour {
         } else if (gameObject.name.Contains("right")) {
             hand = SteamVR_Input_Sources.RightHand;
         }
+
+        for (int i = 0; i < 30; i++) {
+            previousPositions.Add(new Vector3(0, 0, 0));
+        }
+        
 	}
 	
-
 	void Update () {
         GetInput();
         MoveObject();
         lastPosition = transform.position;
         lastRotation = transform.eulerAngles;
-	}
+    }
 
     private void GetInput() {
         pullAmount = triggerPull.GetAxis(hand);
@@ -47,9 +53,7 @@ public class vrPickupObject : MonoBehaviour {
         if (grabbedObject) { //if we are holding an object
             Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
             rb.MovePosition(this.transform.position);
-            rb.MoveRotation(this.transform.rotation);
-
-
+            rb.MoveRotation(this.transform.rotation);       
         }
     }
 
@@ -65,12 +69,12 @@ public class vrPickupObject : MonoBehaviour {
         pulled = false;
         if (grabbedObject && grabbedObject.transform.childCount >= 1) {
             GameObject childObject = grabbedObject.transform.GetChild(0).gameObject;
-            Debug.Log(childObject.name);
+            //Debug.Log(childObject.name);
             childObject.GetComponentInChildren<Rigidbody>().freezeRotation = false;
             childObject.GetComponentInChildren<Rigidbody>().useGravity = true;
             childObject.GetComponentInChildren<Rigidbody>().isKinematic = false;
             childObject.GetComponentInChildren<Rigidbody>().velocity = CalulateVelocity();
-            childObject.GetComponentInChildren<Rigidbody>().AddTorque((transform.eulerAngles - lastRotation) / Time.deltaTime);
+            childObject.GetComponentInChildren<Rigidbody>().angularVelocity += CalulateAngularVelocity();
             childObject.GetComponentInChildren<Transform>().parent = null;
             Destroy(grabbedObject);
         }
@@ -85,8 +89,13 @@ public class vrPickupObject : MonoBehaviour {
         return velocity;
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private Vector3 CalulateAngularVelocity() {
+        Vector3 angularVelocity = (transform.eulerAngles - lastRotation) / Time.deltaTime;
+        return angularVelocity;
+    }
 
+    private void OnTriggerEnter(Collider other) {
+        //OnTriggerStay(other); //Does anyone know if you can do this? -Dustin
     }
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.tag == "grabbable") {
