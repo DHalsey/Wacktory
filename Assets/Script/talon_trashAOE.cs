@@ -17,7 +17,7 @@ public class talon_trashAOE : MonoBehaviour {
 	void Start () {
         isTriggered = false;
         timeInTrigger = 0.0f;
-        float triggerEnterStartTime = 0.0f;
+        triggerEnterStartTime = 0.0f;
 
         trashArea = gameObject;
         trashArea.GetComponent<Renderer>().material.color = trashColor;
