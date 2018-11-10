@@ -14,8 +14,10 @@ public class couchPlayerMovement : MonoBehaviour {
     private string verticalAxisName;
     private string horizontalAxisName;
     private Vector3 movementInput;
+    private string jumpButtonName;
     private Rigidbody rb;
     private bool isGrounded;
+    private bool jumped = false;
 
     private Quaternion turnAngle = new Quaternion();
 
@@ -29,18 +31,24 @@ public class couchPlayerMovement : MonoBehaviour {
     {
         verticalAxisName = "Vertical" + playerNumber;
         horizontalAxisName = "Horizontal" + playerNumber;
+        jumpButtonName = "Jump" + playerNumber;
 	}
 	
 	private void Update()
     {
         movementInput = new Vector3(Input.GetAxisRaw(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
+        if (Input.GetAxis(jumpButtonName) > 0f)
+        {
+            Jump();
+        }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.name == "Ground")
+        if (collision.gameObject.name == "Floor")
         {
             isGrounded = true;
+            jumped = false;
         }
     }
 
@@ -122,8 +130,9 @@ public class couchPlayerMovement : MonoBehaviour {
     // TODO: Handle jump input and call this function
     private void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && !jumped)
         {
+            jumped = true;
             rb.AddForce(Vector3.up * jumpForce);
         }
     }
