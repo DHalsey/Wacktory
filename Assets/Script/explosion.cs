@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class explosion : MonoBehaviour {
 
-    public float explosionForce = 10.0f;
-    public float radius = 5.0f;
+    public float explosionForce = 500.0f;
+    public float radius = 10.0f;
 
     // Use this for initialization
     void Start () {
@@ -14,7 +14,7 @@ public class explosion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown("space"))
+		if (Input.GetKeyDown(KeyCode.RightShift))
         {
             Explode();
         }

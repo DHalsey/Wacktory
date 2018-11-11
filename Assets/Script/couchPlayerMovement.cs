@@ -37,7 +37,7 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         movementInput = new Vector3(Input.GetAxisRaw(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
-        if (Input.GetAxis(jumpButtonName) > 0f)
+        if (Input.GetAxis(jumpButtonName) > 0.0f)
         {
             Jump();
         }
@@ -127,7 +127,6 @@ public class couchPlayerMovement : MonoBehaviour {
         rb.AddForce(Vector3.down * 9.81f * gravity);
     }
     
-    // TODO: Handle jump input and call this function
     private void Jump()
     {
         if (isGrounded && !jumped)
