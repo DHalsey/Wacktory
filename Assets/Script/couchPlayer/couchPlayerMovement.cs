@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class couchPlayerMovement : MonoBehaviour {
     
-    public int playerNumber = 1;
-    public float moveSpeed = 5.0f;
-    public float turnSpeed = 4.0f;
-    public float friction = 10.0f;
-    public float gravity = 4.0f;
-    public float jumpForce = 10.0f;
+    public int playerNumber;
+    public float moveSpeed = 50.0f;
+    public float turnSpeed = 0.1f;
+    public float friction = 600.0f;
+    public float gravity = 3.0f;
+    public float jumpForce = 350.0f;
+    public float timeToGetUp = 3.0f;
+
+    private Collider coll;
+    public PhysicMaterial physMat;
+
+    [HideInInspector] public bool explosion;
+
+    private bool ragdolling;
     
     private string verticalAxisName;
     private string horizontalAxisName;
@@ -17,7 +25,9 @@ public class couchPlayerMovement : MonoBehaviour {
     private string jumpButtonName;
     private Rigidbody rb;
     private bool isGrounded;
-    private bool jumped = false;
+    private bool jumped;
+
+    private IEnumerator ragdoll;
 
     private Quaternion turnAngle = new Quaternion();
 
@@ -25,6 +35,9 @@ public class couchPlayerMovement : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         isGrounded = false;
+        jumped = false;
+        explosion = false;
+        ragdolling = false;
     }
    
     private void Start()
@@ -32,6 +45,8 @@ public class couchPlayerMovement : MonoBehaviour {
         verticalAxisName = "Vertical" + playerNumber;
         horizontalAxisName = "Horizontal" + playerNumber;
         jumpButtonName = "Jump" + playerNumber;
+        coll = GetComponent<Collider>();
+        physMat = coll.material;
 	}
 	
 	private void Update()
@@ -41,6 +56,33 @@ public class couchPlayerMovement : MonoBehaviour {
         {
             Jump();
         }
+
+        if (explosion)
+        {
+            explosion = false;
+            if (ragdoll != null)
+                StopCoroutine(ragdoll);
+
+            ragdoll = Ragdoll();
+            StartCoroutine(ragdoll);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!ragdolling)
+        {
+            MovePlayer();
+            TurnPlayer();
+        }
+
+        ApplyGravity();
+
+        if (isGrounded)
+        {
+            ApplyFriction();
+        }
+
     }
 
     private void OnCollisionStay(Collision collision)
@@ -49,18 +91,6 @@ public class couchPlayerMovement : MonoBehaviour {
         {
             isGrounded = true;
             jumped = false;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        MovePlayer();
-        TurnPlayer();
-        ApplyGravity();
-
-        if (isGrounded)
-        {
-            ApplyFriction();
         }
     }
 
@@ -134,5 +164,26 @@ public class couchPlayerMovement : MonoBehaviour {
             jumped = true;
             rb.AddForce(Vector3.up * jumpForce);
         }
+    }
+
+    private IEnumerator Ragdoll()
+    {
+        ragdolling = true;
+        coll.material.dynamicFriction = 0.2f;
+        coll.material.bounciness = 0.5f;
+
+        yield return new WaitForSeconds(timeToGetUp);
+
+        GetUp();
+        coll.material.dynamicFriction = 0.0f;
+        coll.material.bounciness = 0.0f;
+        ragdolling = false;
+    }
+
+    private void GetUp()
+    {
+        Quaternion resetAngle = Quaternion.identity;
+        transform.rotation = Quaternion.Lerp(transform.rotation, resetAngle, turnSpeed);
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 }

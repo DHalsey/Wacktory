@@ -191,6 +191,9 @@ MonoBehaviour:
   friction: 600
   gravity: 3
   jumpForce: 350
+  timeToGetUp: 3
+  physMat: {fileID: 0}
+  explosion: 0
 --- !u!136 &136496242293523356
 CapsuleCollider:
   m_ObjectHideFlags: 1

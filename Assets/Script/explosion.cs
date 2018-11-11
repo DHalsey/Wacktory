@@ -6,6 +6,7 @@ public class explosion : MonoBehaviour {
 
     public float explosionForce = 500.0f;
     public float radius = 10.0f;
+    public float maxRagdollDistance = 4.0f;
 
     // Use this for initialization
     void Start () {
@@ -30,9 +31,16 @@ public class explosion : MonoBehaviour {
         foreach (Collider hit in colliders)
         {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
+            couchPlayerMovement script = hit.GetComponent<couchPlayerMovement>();
 
             if (rbHit != null)
             {
+                if (script != null && Vector3.Distance(rbHit.position, transform.position) < maxRagdollDistance)
+                { 
+                    script.explosion = true;
+                    rbHit.constraints = RigidbodyConstraints.None;
+                }
+
                 rbHit.AddExplosionForce(explosionForce, explosionCenter, radius);
             }
         }
