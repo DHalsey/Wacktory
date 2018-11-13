@@ -32,6 +32,10 @@ public class talon_boxContents : MonoBehaviour
     }
 
     public void updateContentsPos(Vector3 newPos) {
+        float yOffset = newPos.y + 0.25f;
+
+        newPos = new Vector3(newPos.x, yOffset, newPos.z);
+
         heldContent.transform.position = newPos;
     }
 
