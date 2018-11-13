@@ -12,7 +12,8 @@ public class talon_boxContents : MonoBehaviour
 
     List<GameObject> boxObjsArray = new List<GameObject>();
 
-    GameObject heldContent;
+    GameObject boxContains;
+    GameObject contentsCopy;
 
     // Use this for initialization
     void Start()
@@ -23,12 +24,12 @@ public class talon_boxContents : MonoBehaviour
         boxObjsArray.Add(walnutObj);
 
         // Putting random object in a box
-        heldContent = boxObjsArray[Random.Range(0, numItems)];
+        boxContains = boxObjsArray[Random.Range(0, numItems)];
     }
 
     // Displays the contints 
     public void showContents() {
-        heldContent = Instantiate(heldContent, transform.position, transform.rotation);
+        contentsCopy = Instantiate(boxContains, transform.position, transform.rotation);
     }
 
     public void updateContentsPos(Vector3 newPos) {
@@ -36,11 +37,11 @@ public class talon_boxContents : MonoBehaviour
 
         newPos = new Vector3(newPos.x, yOffset, newPos.z);
 
-        heldContent.transform.position = newPos;
+        contentsCopy.transform.position = newPos;
     }
 
     public void hideContents() {
-        Destroy(heldContent);
+        Destroy(contentsCopy);
     }
 
     // Update is called once per frame
