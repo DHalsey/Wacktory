@@ -174,7 +174,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/squeeze"
+                     "output" : "/actions/default/in/grabtrigger"
                   }
                },
                "mode" : "trigger",
@@ -183,7 +183,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/squeeze"
+                     "output" : "/actions/default/in/grabtrigger"
                   }
                },
                "mode" : "trigger",
@@ -193,6 +193,9 @@
                "inputs" : {
                   "position" : {
                      "output" : "/actions/default/in/touchpadtouch"
+                  },
+                  "touch" : {
+                     "output" : "/actions/default/in/touchpadtap"
                   }
                },
                "mode" : "trackpad",
@@ -202,6 +205,9 @@
                "inputs" : {
                   "position" : {
                      "output" : "/actions/default/in/touchpadtouch"
+                  },
+                  "touch" : {
+                     "output" : "/actions/default/in/touchpadtap"
                   }
                },
                "mode" : "trackpad",

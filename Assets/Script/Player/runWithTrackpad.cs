@@ -32,8 +32,7 @@ public class runWithTrackpad : MonoBehaviour {
     private void FixedUpdate() {
         ApplyFriction();
         MovePlayer();
-        ClampSpeed();
-        
+        ClampSpeed();      
     }
 
     void GetControls() {
@@ -43,38 +42,32 @@ public class runWithTrackpad : MonoBehaviour {
 
     }
 
-    void Test2() {
-        //headForward = headTransform.rotation;
-        
-    }
-
     void MovePlayer() {
-        Vector3 direction = new Vector3(trackPadLeftPos.x, 0, trackPadLeftPos.y);
-        
-        rb.AddForce(headForward*direction*acceleration*Time.deltaTime);
-
-        Vector3 movementDirection = headForward * direction * acceleration * Time.deltaTime;
-
-        float newY = (-movementDirection.x * collisionNormal.x - movementDirection.z * collisionNormal.z) / collisionNormal.y;
-        Vector3 newMovement = new Vector3(movementDirection.x, newY, movementDirection.z);
-        Debug.Log(collisionNormal);
-        LineRenderer line = GetComponent<LineRenderer>();
-
-        line.SetPosition(1, line.GetPosition(0)+ newMovement.normalized);
+        Vector3 direction = new Vector3(trackPadLeftPos.x, 0, trackPadLeftPos.y); //the direction of input from the player
+        Vector3 movementDirection = headForward * direction * acceleration * Time.deltaTime; //adjusts the direction of movement to be relative to the rotation of the player's head
+        if (collisionNormal.y == 0) collisionNormal.y = 0.0000001f; //prevent divide by zero
+        float newY = (-movementDirection.x * collisionNormal.x - movementDirection.z * collisionNormal.z) / collisionNormal.y; //gets the y value for the vector perpendicular to the ground collision
+        Vector3 newMovement = new Vector3(movementDirection.x, newY, movementDirection.z); //the new direction of movement that is perpendicular to the normal we are walking on.  This ensures we can move up ramps properly
+        rb.AddForce(newMovement);
+        DrawDebugMovement(newMovement);
     }
 
     //prevents the player from moving faster than the maximum speed
+    //we care only about horizontal speed as to not limit the fall speed of the player
     void ClampSpeed() {
-        if (rb.velocity.magnitude > maxSpeed) {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+        float horizontalMagnitude = Mathf.Sqrt(Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.z,2)); //the speed of the rigidbody without consideration for the y
+        if (horizontalMagnitude > maxSpeed) {           
+            rb.velocity = new Vector3(rb.velocity.x * maxSpeed/horizontalMagnitude, rb.velocity.y, rb.velocity.z * maxSpeed / horizontalMagnitude);
         }
     }
 
     //Simulates slowing down the player so decelleration is always the same
     void ApplyFriction() { 
 
-        Vector3 changedVelocity = rb.velocity - rb.velocity.normalized * 0.05f;
-
+        Vector3 changedVelocity = rb.velocity * 0.95f;
+        //if(Mathf.Sign(rb.velocity.magnitude) != changedVelocity.magnitude) {
+        //    changedVelocity = Vector3.zero;
+        //}
         rb.velocity = changedVelocity;
     }
 
@@ -90,12 +83,30 @@ public class runWithTrackpad : MonoBehaviour {
     private void OnCollisionStay(Collision collision) {
         Vector3 normalCol = collision.contacts[0].normal;
         Vector3 vecFlat = new Vector3(normalCol.x, 0, normalCol.z);
-        Debug.Log(vecFlat.magnitude / normalCol.magnitude * Mathf.Rad2Deg);
         if (vecFlat.magnitude / normalCol.magnitude * Mathf.Rad2Deg <= 30) { //if we are walking on a slipe <=30 degrees
             collisionNormal = normalCol;
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionExit(Collision collision) {
+        collisionNormal = Vector3.up;
+    }
+
+
+    //draws a debug line to show the direction of movement
+    private void DrawDebugMovement(Vector3 newMovement) {
+        LineRenderer line = this.gameObject.GetComponent<LineRenderer>();
+        if (!line) { //if we dont have a linecomponent
+            //add a line component and initialize it
+            line = this.gameObject.AddComponent<LineRenderer>();
+            line.positionCount = 2;
+            line.useWorldSpace = false;
+            line.startWidth = 0.2f;
+            line.endWidth = 0.1f;
+            line.numCapVertices = 10;
+            line.SetPosition(0, new Vector3(0, 0.2f, 0));
+        } else {
+            line.SetPosition(1, line.GetPosition(0) + newMovement/500);
+        }
         
     }
 }
