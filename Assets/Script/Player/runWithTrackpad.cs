@@ -9,6 +9,7 @@ public class runWithTrackpad : MonoBehaviour {
     public float acceleration = 1000.0f;
     public Transform headTransform;
     private Quaternion headForward; //used to handle the direction of the movement to be in relation of direction that the player is looking
+    private Quaternion groundAngle;
     private float maxSpeed = 2.0f;
     private Rigidbody rb; // the rigidbody of the player
 
@@ -37,20 +38,14 @@ public class runWithTrackpad : MonoBehaviour {
 
     void GetControls() {
         trackPadLeftPos = touchPadAction.GetAxis(SteamVR_Input_Sources.LeftHand);
-        if(test == 1) Test();
-        if(test == 2) Test2();
+        headForward = Quaternion.identity; //to zero our the other angles
+        headForward.y = headTransform.rotation.y; //we only care about the y rotation of the headset (for direction). we dont want to launch up
 
-    }
-
-    void Test() {
-        if (touchPadTap.GetStateDown(SteamVR_Input_Sources.LeftHand)) {
-            headForward = headTransform.rotation;
-            Debug.Log("Touched");
-        }
     }
 
     void Test2() {
-        headForward = headTransform.rotation;
+        //headForward = headTransform.rotation;
+        
     }
 
     void MovePlayer() {
@@ -66,10 +61,28 @@ public class runWithTrackpad : MonoBehaviour {
     }
 
     //Simulates slowing down the player so decelleration is always the same
-    void ApplyFriction() {
+    void ApplyFriction() { 
 
         Vector3 changedVelocity = rb.velocity - rb.velocity.normalized * 0.05f;
 
         rb.velocity = changedVelocity;
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        Vector3 normalCol = collision.contacts[0].normal;
+        Vector3 vecFlat = new Vector3(normalCol.x, 0, normalCol.z);
+        Debug.Log(vecFlat.magnitude/normalCol.magnitude* Mathf.Rad2Deg);
+        if (vecFlat.magnitude / normalCol.magnitude * Mathf.Rad2Deg <= 30) { //if we are walking on a slipe <=30 degrees
+            groundAngle = Quaternion.identity;
+            groundAngle.x = 1/normalCol.x;
+            groundAngle.z = 1/normalCol.z;
+        }
+        
+    }
+    private void OnCollisionStay(Collision collision) {
+        
+    }
+    private void OnCollisionEnter2D(Collision2D collision) {
+        
     }
 }
