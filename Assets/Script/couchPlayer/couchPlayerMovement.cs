@@ -17,7 +17,7 @@ public class couchPlayerMovement : MonoBehaviour {
 
     [HideInInspector] public bool explosion;
 
-    private bool ragdolling;
+    [HideInInspector] public bool ragdolling;
     
     private string verticalAxisName;
     private string horizontalAxisName;
