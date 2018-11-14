@@ -86,6 +86,11 @@ public class couchPlayerPickUp : MonoBehaviour {
         if (rbItem != null)
         {
             heldItem = item;
+
+            Vector3 newHoldPosition = new Vector3(holdPosition.position.x + transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2, 
+                holdPosition.position.y, holdPosition.position.z + transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
+
+            holdPosition.position = newHoldPosition;
             heldItem.transform.position = holdPosition.position;
             heldItem.transform.rotation = holdPosition.rotation;
             heldItem.transform.parent = holdPosition;
@@ -98,15 +103,18 @@ public class couchPlayerPickUp : MonoBehaviour {
     private void Release()
     {
         pickup = false;
-        heldItem.transform.parent = null;
+        Vector3 oldHoldPosition = new Vector3(holdPosition.position.x - transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2,
+                holdPosition.position.y, holdPosition.position.z - transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
         Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
+        heldItem.transform.parent = null;
+        
         if (rbItem != null)
         {
             rbItem.constraints = RigidbodyConstraints.None;
         }
         heldItem.GetComponent<grabbableCollision>().held = false;
         heldItem = null;
-
+        holdPosition.position = oldHoldPosition;
         timestamp = Time.time + pickupCooldown;
     }
 
@@ -119,4 +127,5 @@ public class couchPlayerPickUp : MonoBehaviour {
             rbItem.AddForce(transform.parent.forward * throwForce, ForceMode.Impulse);
         }
     }
+    
 }
