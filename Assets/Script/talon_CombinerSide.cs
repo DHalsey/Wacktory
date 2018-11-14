@@ -16,8 +16,11 @@ public class talon_CombinerSide : MonoBehaviour {
     int neededItemCount;
     bool hasBeenCombined;
 
+    bool isGitWorking = false;
+
 	// Use this for initialization
 	void Start () {
+
         neededItemCount = 0;
         hasBeenCombined = false;
         textDisplay.GetComponent<TextMesh>().text = 0 + " / " + howMany;
