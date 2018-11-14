@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33401139653140908}
   - component: {fileID: 23613225145376182}
   - component: {fileID: 136387178829036974}
+  - component: {fileID: 114569441171298624}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -171,6 +172,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.58727986, y: 2.1026611, z: 0.663115}
   m_Center: {x: -0.031558756, y: 0.051330566, z: -0.0041123335}
+--- !u!114 &114569441171298624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340625896181140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0bc2e11ab532b44b5ad0d7f7b16616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPressed: 0
+  btnPressAmt: 0.17
+  btnColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0}
+  btnBaseColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0}
 --- !u!114 &114623139874599300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,7 +198,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0bc2e11ab532b44b5ad0d7f7b16616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brnColor: {r: 0, g: 0, b: 0, a: 0}
+  isPressed: 0
+  btnPressAmt: 0.17
+  btnColor: {r: 0, g: 0, b: 0, a: 0}
+  btnBaseColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!136 &136387178829036974
 CapsuleCollider:
   m_ObjectHideFlags: 1
