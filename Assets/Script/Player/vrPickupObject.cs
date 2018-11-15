@@ -7,8 +7,6 @@ public class vrPickupObject : MonoBehaviour {
     private GameObject grabbedObject;
     private float pullAmount;
     private bool pulled = false;
-    private Vector3 grabOffsetPos; //the offset position when grabbed. makes sure the object stays in the grabbed position
-    private Quaternion grabOffsetRot;
     private SteamVR_Input_Sources hand; //used to get which controller this script is using
     private Collider grabCollider; //the collider box for grabbing
     private Collider playerCollider; //the collider of the player
@@ -78,8 +76,6 @@ public class vrPickupObject : MonoBehaviour {
             childObject.GetComponentInChildren<Transform>().parent = null;
             Destroy(grabbedObject);
         }
-        grabOffsetPos = Vector3.zero;
-        grabOffsetRot = Quaternion.identity;
         grabbedObject = null;
     }
 
@@ -117,10 +113,6 @@ public class vrPickupObject : MonoBehaviour {
                 grabbedObject.transform.position = this.transform.position;
                 grabbedObject.transform.rotation = this.transform.rotation;
                 other.gameObject.transform.parent = grabbedObject.transform;
-
-                //hold the offsets so we can grab the objects in different locations
-                grabOffsetPos = other.gameObject.transform.position - this.transform.position;
-                grabOffsetRot = this.transform.rotation;
 
                 other.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
                 other.gameObject.GetComponent<Rigidbody>().useGravity = false;
