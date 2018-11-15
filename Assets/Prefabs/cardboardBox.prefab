@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 114488646844448722}
   - component: {fileID: 33487872763455344}
   - component: {fileID: 23696578647031190}
-  - component: {fileID: 65948394100798150}
   - component: {fileID: 54121233138850466}
+  - component: {fileID: 65245053080553662}
   m_Layer: 8
   m_Name: cardboardBox
   m_TagString: grabbable
@@ -38,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501076604439580}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.55, y: 0.807, z: 1.657}
-  m_LocalScale: {x: 0.5, y: 0.35, z: 0.5}
+  m_LocalPosition: {x: 3.388967, y: 0.947, z: -5.5029526}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501076604439580}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300004, guid: 27824b0f2b45cf243a6962a290be12a6, type: 3}
 --- !u!54 &54121233138850466
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -101,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65948394100798150
+--- !u!65 &65245053080553662
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,8 +111,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.40982774, y: 0.35631895, z: 0.4943243}
+  m_Center: {x: 0.0008176118, y: 0.012625076, z: -0.00042697787}
 --- !u!114 &114488646844448722
 MonoBehaviour:
   m_ObjectHideFlags: 1
