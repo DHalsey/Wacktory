@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CouchPlayers
   - CouchPlayerRigs
+  - grabbable
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Grabbable
+  - CouchHoldPosition
+  - CouchPlayers
+  - couchCameraRender
   - 
   - 
   - 
