@@ -19,7 +19,7 @@ public class runWithTrackpad : MonoBehaviour {
     private bool trackPadLeftTap = false;
     public float acceleration = 100000f; 
     public Transform headTransform; //the transform of the VR headset (needed to decide what is forward)
-    private Quaternion headForward; //used to handle the direction of the movement to be in relation of direction that the player is looking
+    private Vector3 headForward; //used to handle the direction of the movement to be in relation of direction that the player is looking
     private Vector3 collisionNormal = new Vector3(0,0,0); //will hold the normal vector of the collided object. used to move up hills
     private float maxSpeed = 2.0f; //the max horizontal velocity of the player
     private Rigidbody rb; // the rigidbody of the player
@@ -48,15 +48,17 @@ public class runWithTrackpad : MonoBehaviour {
     //gets all the neccessary input from the player
     void GetControls() {
         trackPadLeftPos = touchPadAction.GetAxis(SteamVR_Input_Sources.LeftHand); //use only the left hand input
-        headForward = Quaternion.identity; //to zero out the other angles
-        headForward.y = headTransform.rotation.y; //we only care about the y rotation of the headset (for direction). we dont want to launch up
+        //trackPadLeftPos = touchPadAction.GetAxis(SteamVR_Input_Sources.Any); //debug to allow movement for any controller to make testing easier
+        headForward = Vector3.zero; //zero out the vector
+        headForward.y = headTransform.eulerAngles.y; //we only care about the y rotation of the headset (for direction). we dont want to launch up
+        Debug.Log(headTransform.rotation.y + headTransform.rotation.w);
 
     }
 
     //physically moves the player's vr playspace (and thus the player as well)
     void MovePlayer() {
         Vector3 direction = new Vector3(trackPadLeftPos.x, 0, trackPadLeftPos.y); //the direction of input from the player
-        Vector3 movementDirection = headForward * direction * acceleration * Time.deltaTime; //adjusts the direction of movement to be relative to the rotation of the player's head
+        Vector3 movementDirection = Quaternion.Euler(headForward) * direction * acceleration * Time.deltaTime; //adjusts the direction of movement to be relative to the rotation of the player's head
         if (collisionNormal.y == 0) collisionNormal.y = 0.0000001f; //prevent divide by zero
         float newY = (-movementDirection.x * collisionNormal.x - movementDirection.z * collisionNormal.z) / collisionNormal.y; //gets the y value for the vector perpendicular to the ground collision
         Vector3 newMovement = new Vector3(movementDirection.x, newY, movementDirection.z); //the new direction of movement that is perpendicular to the normal we are walking on.  This ensures we can move up ramps properly
@@ -74,8 +76,11 @@ public class runWithTrackpad : MonoBehaviour {
     }
 
     //Simulates slowing down the player so decelleration is always the same
-    void ApplyFriction() { 
-        Vector3 changedVelocity = rb.velocity * 0.95f; //scales the velocity down
+    void ApplyFriction() {
+        Vector3 changedVelocity = Vector3.zero;
+        changedVelocity.x = rb.velocity.x * 0.95f; //scales the velocity down
+        changedVelocity.y = rb.velocity.y; //scales the velocity down
+        changedVelocity.z = rb.velocity.z * 0.95f; //scales the velocity down
         rb.velocity = changedVelocity;
     }
 
