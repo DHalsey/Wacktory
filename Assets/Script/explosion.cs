@@ -15,6 +15,7 @@ public class explosion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // For now, bombs explode when RIGHT SHIFT is pressed.  ***************** CHANGE LATER *********************
 		if (Input.GetKeyDown(KeyCode.RightShift))
         {
             Explode();
@@ -23,11 +24,11 @@ public class explosion : MonoBehaviour {
 
     private void Explode()
     {
-        Debug.Log("EXPLODE");
-        Vector3 explosionCenter = transform.position;
+        Vector3 explosionCenter = transform.position; // The center of the explosion radius
 
-        Collider[] colliders = Physics.OverlapSphere(explosionCenter, radius);
+        Collider[] colliders = Physics.OverlapSphere(explosionCenter, radius); // Array of colliders that are within the explosion radius.
 
+        // For every collider in the explosion radius
         foreach (Collider hit in colliders)
         {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
@@ -35,12 +36,14 @@ public class explosion : MonoBehaviour {
 
             if (rbHit != null)
             {
+                // If the object has a couchPlayerMovement script, set explosion to true in the player's script and disable its constraints before applying the explosive force to it.
                 if (script != null && Vector3.Distance(rbHit.position, transform.position) < maxRagdollDistance)
                 { 
                     script.explosion = true;
                     rbHit.constraints = RigidbodyConstraints.None;
                 }
 
+                // Apply explosion force to object, only if it has a rigidbody component.
                 rbHit.AddExplosionForce(explosionForce, explosionCenter, radius);
             }
         }
