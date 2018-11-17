@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4628618756136670}
   - component: {fileID: 33678451522569334}
   - component: {fileID: 23842250222594980}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BoxItem_walnut
   m_TagString: Untagged
   m_Icon: {fileID: 0}

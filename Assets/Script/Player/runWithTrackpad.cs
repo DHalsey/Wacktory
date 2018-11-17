@@ -51,7 +51,6 @@ public class runWithTrackpad : MonoBehaviour {
         //trackPadLeftPos = touchPadAction.GetAxis(SteamVR_Input_Sources.Any); //debug to allow movement for any controller to make testing easier
         headForward = Vector3.zero; //zero out the vector
         headForward.y = headTransform.eulerAngles.y; //we only care about the y rotation of the headset (for direction). we dont want to launch up
-        Debug.Log(headTransform.rotation.y + headTransform.rotation.w);
 
     }
 

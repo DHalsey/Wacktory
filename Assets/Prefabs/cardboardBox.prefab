@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 23696578647031190}
   - component: {fileID: 54121233138850466}
   - component: {fileID: 65245053080553662}
+  - component: {fileID: 114300471255296880}
+  - component: {fileID: 114970394236550422}
   m_Layer: 8
   m_Name: cardboardBox
   m_TagString: grabbable
@@ -113,6 +115,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.40982774, y: 0.35631895, z: 0.4943243}
   m_Center: {x: 0.0008176118, y: 0.012625076, z: -0.00042697787}
+--- !u!114 &114300471255296880
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1501076604439580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9245acba1aef5409e8646823e17e4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chickenObj: {fileID: 1124719439774880, guid: a33b162e6e7616144a46763267fb7ec9, type: 2}
+  bombObj: {fileID: 1520353390274870, guid: 5b2f9ac080fc2a74c9e471f54c148fe8, type: 2}
+  walnutObj: {fileID: 1013024336672700, guid: 17a7c40b3df589046a953510d4c7ab07, type: 2}
+  numItems: 3
+  boxContains: {fileID: 0}
 --- !u!114 &114488646844448722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,3 +143,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   held: 0
+--- !u!114 &114970394236550422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1501076604439580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d1bad5b4f64a9143b7de243e5e8950b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombObj: {fileID: 1182716871888638, guid: 83ec0f83e035b0a4db5ea53c0b4fabd8, type: 2}
+  chickenObj: {fileID: 1725543272571594, guid: 2f956b279a580eb449e737720d94a39f, type: 2}
+  walnutObj: {fileID: 1501076604439580}

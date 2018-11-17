@@ -19,7 +19,7 @@ public class talon_buttonTrigger : MonoBehaviour {
     // When triggered, button will press in towards the floor
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag + " ENTERED");
+        //Debug.Log(other.tag + " ENTERED");
         
         btn.transform.position = new Vector3(
             btn.transform.position.x,
@@ -39,7 +39,7 @@ public class talon_buttonTrigger : MonoBehaviour {
     // When triggered, button will release; reutrning to original height
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.tag + " EXITED");
+        //Debug.Log(other.tag + " EXITED");
         btn.transform.position = new Vector3(
             btn.transform.position.x,
             btn.transform.position.y + pressAmount,

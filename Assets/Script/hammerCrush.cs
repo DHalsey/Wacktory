@@ -5,6 +5,8 @@ using UnityEngine;
 public class hammerCrush : MonoBehaviour {
 
     public GameObject hammer;
+    public GameObject button; //the gameobject of the button that activates the hammer
+    private talon_buttonTrigger buttonScript;
 
     private bool hammerDown;
     private bool hammerUp;
@@ -22,12 +24,17 @@ public class hammerCrush : MonoBehaviour {
 	void Start () {
         hammerDown = false;
         currentAngle = transform.eulerAngles;
+        buttonScript = button.GetComponent<talon_buttonTrigger>(); //gets the button script to handle if the hammer should activate
+        if (!buttonScript) { //error to catch changes to the buttonTrigger script
+            Debug.LogError("Error!: hammerCrush did not find the buttonScript");
+        }
+        //Debug.Log(buttonScript);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown("space") && !hammerDown && !hammerUp)
+        if (/*Input.GetKeyDown("space")*/ buttonScript.isPressed && !hammerDown && !hammerUp) //pulls isPressed from buttonScript to see if the  button is pressed
         {
             hammerDown = true;
         }
@@ -37,11 +44,13 @@ public class hammerCrush : MonoBehaviour {
         {
             currentAngle = Vector3.Lerp(upAngle, downAngle, moveTime);
 
-            hammer.transform.eulerAngles = currentAngle;
+            hammer.transform.localEulerAngles = currentAngle; //changed this to localEulerAngles to make it work with a rotated hammer - dustin
             moveTime += Time.deltaTime * hammerSpeed;
 
             // Once hammer is fully lowered
-            if (hammer.transform.eulerAngles == downAngle)
+            //changed this from an == to a >= due to computer rounding errors making it slightly off when the hammer is rotated - dustin
+            // the 0.1 is to accomodate a small variance
+            if (hammer.transform.eulerAngles.z >= downAngle.z - 0.1f) 
             {
                 hammerUp = true;
                 hammerDown = false;
@@ -54,11 +63,13 @@ public class hammerCrush : MonoBehaviour {
         {
             currentAngle = Vector3.Lerp(downAngle, upAngle, moveTime);
 
-            hammer.transform.eulerAngles = currentAngle;
+            hammer.transform.localEulerAngles = currentAngle;
             moveTime += Time.deltaTime * raiseSpeed;
 
             // Once hammer is fully raised
-            if (hammer.transform.eulerAngles == upAngle)
+            //changed this from an == to a >= due to computer rounding errors making it slightly off when the hammer is rotated - dustin
+            // the 0.1 is to accomodate a small variance
+            if (hammer.transform.eulerAngles.z <= upAngle.z + 0.1f)
             {
                 hammerUp = false;
                 moveTime = 0f;

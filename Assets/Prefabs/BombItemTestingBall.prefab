@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54467329754420802}
   m_Layer: 0
   m_Name: BombItemTestingBall
-  m_TagString: Untagged
+  m_TagString: grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
