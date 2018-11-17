@@ -4,45 +4,28 @@ using UnityEngine;
 
 public class talon_buttonTrigger : MonoBehaviour {
 
-    GameObject btn;
-
-    float btnX, btnY, btnZ;
-    float btnR, btnG, btnB;
-    float btnBaseR, btnBaseG, btnBaseB;
-
+    public GameObject btn;
+    public float pressAmount;
     public bool isPressed;
-
-    public float btnPressAmt = 0.17f;
-
-    public Color btnColor, btnBaseColor = new Color();
+    public Color btnColor;
 
     // Use this for initialization
     void Start ()
     {
-        // // Needed for accessing the currnet button
-        // btn = gameObject;
-
-        // // Setting button presser and button base color
-        // btn.transform.parent.gameObject.GetComponent<Renderer>().material.color = btnBaseColor;
-        // btn.GetComponent<Renderer>().material.color = btnColor;
-
-        // btnX = btn.transform.position.x;
-        // btnY = btn.transform.position.y;
-        // btnZ = btn.transform.position.z;
-
+        pressAmount = 0.17f;
         isPressed = false;
     }
 
     // When triggered, button will press in towards the floor
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name + " entered " + gameObject.name + " trigger");
-
-        // // Slightly changing color to show button is pressed
-        // btn.GetComponent<Renderer>().material.color = new Color(btnColor.r * 0.7f, btnColor.g * 0.7f, btnColor.b * 0.7f);
-
-        // // Translating button down, because it's being pressed
-        // transform.position = new Vector3(btnX, btnY - btnPressAmt, btnZ);
+        Debug.Log(other.tag + " ENTERED");
+        
+        btn.transform.position = new Vector3(
+            btn.transform.position.x,
+            btn.transform.position.y - pressAmount,
+            btn.transform.position.z
+        );
 
         isPressed = true;
     }
@@ -56,12 +39,12 @@ public class talon_buttonTrigger : MonoBehaviour {
     // When triggered, button will release; reutrning to original height
     private void OnTriggerExit(Collider other)
     {
-        // btn.GetComponent<Renderer>().material.color = new Color(btnColor.r, btnColor.g, btnColor.b);
-
-        Debug.Log(other.name + " exited " + gameObject.name + " trigger");
-        
-        // transform.position = new Vector3(btnX, btnY, btnZ);
-
+        Debug.Log(other.tag + " EXITED");
+        btn.transform.position = new Vector3(
+            btn.transform.position.x,
+            btn.transform.position.y + pressAmount,
+            btn.transform.position.z
+        );
         isPressed = false;
     }
 
