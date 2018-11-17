@@ -87,7 +87,7 @@ public class couchPlayerMovement : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.name == "Floor")
+        if (collision.gameObject.tag == "floor")
         {
             isGrounded = true;
             jumped = false;

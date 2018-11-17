@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4401743705919374}
   - component: {fileID: 33941534000759596}
   - component: {fileID: 23061062908384736}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BoxItem_chicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}

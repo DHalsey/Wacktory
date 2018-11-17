@@ -12,7 +12,9 @@ public class talon_boxContents : MonoBehaviour
 
     List<GameObject> boxObjsArray = new List<GameObject>();
 
-    GameObject boxContains;
+    [HideInInspector] //allows for the variable to be accessed by other scripts, but not show up in the inspector - dustin
+    public GameObject boxContains;
+
     GameObject contentsCopy;
 
     // Use this for initialization
