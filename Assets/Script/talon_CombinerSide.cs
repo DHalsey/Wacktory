@@ -14,7 +14,7 @@ public class talon_CombinerSide : MonoBehaviour {
 
     // Current number of neededItems in combiner trigger
     int neededItemCount;
-    bool hasBeenCombined;
+    public bool hasBeenCombined;
 
     bool isGitWorking = false;
 
