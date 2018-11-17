@@ -19,11 +19,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4181710757680574}
+  - component: {fileID: 114562560994127542}
   - component: {fileID: 33003329355459624}
   - component: {fileID: 23587250331948200}
   - component: {fileID: 54516454599711638}
   - component: {fileID: 64287385411992854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: banana
   m_TagString: grabbable
   m_Icon: {fileID: 0}
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995492419062134}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 2.2411618, y: 1.089, z: -10.542999}
+  m_LocalPosition: {x: 1.2815084, y: 0.279, z: 0.817}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,3 +116,15 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 3b7c8fcb171f4c543b052fed20dd2a8e, type: 3}
+--- !u!114 &114562560994127542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995492419062134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab16ab1b5ae52a940b214d8ebc78d138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  held: 0

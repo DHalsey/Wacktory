@@ -77,11 +77,6 @@ public class couchPlayerMovement : MonoBehaviour {
             StartCoroutine(ragdoll);
         }
         
-        // TEST INPUT MUST BE REMOVED SOON ******************************************************
-        if (Input.GetKeyDown("space"))
-        {
-            Kill();
-        }
     }
 
     private void FixedUpdate()
