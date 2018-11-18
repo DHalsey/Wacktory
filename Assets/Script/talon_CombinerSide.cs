@@ -11,6 +11,8 @@ public class talon_CombinerSide : MonoBehaviour {
     // The button that needs to be pressed to combine the item
     public GameObject buttonForCombining;
     public GameObject textDisplay;
+    public GameObject testItemOutput;
+    public Transform outputLocation;
 
     // Current number of neededItems in combiner trigger
     int neededItemCount;
@@ -46,12 +48,19 @@ public class talon_CombinerSide : MonoBehaviour {
     // Will run as long as object is in button trigger
     private void OnTriggerStay(Collider other)
     {
-
+        if (hasBeenCombined == true)
+        {
+            if (other.gameObject.tag == "grabbable")
+            {
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     // When triggered, button will release; reutrning to original height
     private void OnTriggerExit(Collider other)
     {
+        
         if (other.gameObject.tag == neededItem.tag) {
             neededItemCount--;
 
@@ -72,6 +81,8 @@ public class talon_CombinerSide : MonoBehaviour {
         if(neededItemCount >= howMany && buttonForCombining.GetComponent<talon_buttonTrigger>().isPressed && !hasBeenCombined){
             // Setting hasBeenCombined to true so this if statement is only true once. Otherwise, the combiner will be true for as long as there is a trigger on the button
             hasBeenCombined = true;
+            GameObject bananaClone = Instantiate(testItemOutput, outputLocation.position, outputLocation.rotation);
+            bananaClone.GetComponent<Rigidbody>().AddForce(Vector3.forward*3, ForceMode.VelocityChange);
             Debug.Log("I'M COMBINEDDDDDDD!!!!");
         }
     }
