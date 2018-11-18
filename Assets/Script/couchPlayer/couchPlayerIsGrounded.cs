@@ -15,7 +15,6 @@ public class couchPlayerIsGrounded : MonoBehaviour {
     // Courtesy of Dustin Halsey
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("COLLIDING");
         Vector3 normalCol = collision.contacts[0].normal; //gets the normal of the newest contacted surface
         Vector3 vecFlat = new Vector3(normalCol.x, 0, normalCol.z); //the adjacent vertex
         //check the degree of the angle of the collided normal using "Cosine=Adjacent/Horizontal" to calculate the angle
