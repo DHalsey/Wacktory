@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4069098665259830}
-  - component: {fileID: 114488646844448722}
   - component: {fileID: 33487872763455344}
   - component: {fileID: 23696578647031190}
   - component: {fileID: 54121233138850466}
@@ -40,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501076604439580}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.388967, y: 0.947, z: -5.5029526}
+  m_LocalPosition: {x: 1.55, y: 0.807, z: 2.749}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,18 +130,6 @@ MonoBehaviour:
   walnutObj: {fileID: 1013024336672700, guid: 17a7c40b3df589046a953510d4c7ab07, type: 2}
   numItems: 3
   boxContains: {fileID: 0}
---- !u!114 &114488646844448722
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1501076604439580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab16ab1b5ae52a940b214d8ebc78d138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  held: 0
 --- !u!114 &114970394236550422
 MonoBehaviour:
   m_ObjectHideFlags: 1

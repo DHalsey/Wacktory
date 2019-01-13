@@ -170,7 +170,7 @@ public class couchPlayerMovement : MonoBehaviour {
         rb.AddForce(Vector3.down * 9.81f * gravity);
     }
     
-    // Only jump if we are groudned and have not already jumped (not in midair)
+    // Only jump if we are grounded and have not already jumped (not in midair)
     private void Jump()
     {
         if (isGrounded && !jumped)

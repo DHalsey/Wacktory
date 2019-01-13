@@ -10,7 +10,8 @@ public class couchPlayerPickUp : MonoBehaviour {
     private float timestamp; // Timestamp for calculating pick up cooldown
 
     private Transform holdPosition; // Position at which the item will be held
-    private bool pickup = false;
+    private bool pickup = false; // Whether or not an item is picked up
+    private bool joined = false;
 
     private GameObject heldItem;
     private couchPlayerMovement parentScript;
@@ -21,18 +22,19 @@ public class couchPlayerPickUp : MonoBehaviour {
 
     private string throwButtonName;
 
-    private SphereCollider holdPositionCollider;
+    //private SphereCollider holdPositionCollider;
 
 	// Use this for initialization
 	void Start () {
         holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition"); // Set reference to CouchPlayerHoldPosition object in the player's children
+        //holdPosition = gameObject.transform.parent;
         parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>(); // Get the player's couchPlayerMovement script
 
         // Input names for holding and throwing objects
         holdButtonName = "Hold" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
         throwButtonName = "Throw" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
 
-        holdPositionCollider = holdPosition.GetComponent<SphereCollider>(); // Get a reference to the holdPosition's collider in order to disable/enable it accordingly
+        //holdPositionCollider = holdPosition.GetComponent<SphereCollider>(); // Get a reference to the holdPosition's collider in order to disable/enable it accordingly
 	}
 	
 	// Update is called once per frame
@@ -66,16 +68,16 @@ public class couchPlayerPickUp : MonoBehaviour {
         }
 
         // If we are not holding any item, disable the holdPosition collider (so we we don't have an invisible collider in front of us)
-        if (heldItem == null && holdPositionCollider.enabled)
-        {
-            holdPositionCollider.enabled = false;
-        }
+        //if (heldItem == null && holdPositionCollider.enabled)
+        //{
+        //    holdPositionCollider.enabled = false;
+        //}
 
-        // If we we are holding an item and the holdPositio collider is disabled, enable it to ensure that it is enabled (so the item does not go through walls)
-        if (heldItem != null && !holdPositionCollider.enabled)
-        {
-            holdPositionCollider.enabled = true;
-        }
+        //// If we we are holding an item and the holdPositio collider is disabled, enable it (so the item does not go through walls)
+        //if (heldItem != null && !holdPositionCollider.enabled)
+        //{
+        //    holdPositionCollider.enabled = true;
+        //}
 	}
 
     // Check if there is a grabbable object in front of us.
@@ -85,6 +87,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         if (pickup && heldItem == null && other.gameObject.tag == "grabbable")
         {
             PickUp(other.gameObject);
+            Debug.Log("Picked up: " + other.gameObject.name);
         }
     }
 
@@ -92,43 +95,45 @@ public class couchPlayerPickUp : MonoBehaviour {
     {
         Rigidbody rbItem = item.GetComponent<Rigidbody>();
 
-        if (rbItem != null)
+        if (rbItem != null && !joined)
         {
             heldItem = item;
 
-            // Change the holdPosition's transform to fit the item's size.
-            Vector3 newHoldPosition = new Vector3(holdPosition.position.x + transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2, 
-                holdPosition.position.y, holdPosition.position.z + transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
+            //heldItem.transform.parent = holdPosition; // Change the item's parent to holdPosition so we can move it around properly.
 
-            holdPosition.position = newHoldPosition; // Move holdPosition to new position that accounts for item's size
+            // Change the holdPosition's transform to fit the item's size.
+            holdPosition.transform.position = transform.parent.position + transform.parent.forward * (0.4f + (heldItem.GetComponent<Collider>().bounds.size.z / 2));
+            heldItem.transform.rotation = holdPosition.rotation;
             heldItem.transform.position = holdPosition.position; // Place item in the holdPosition
-            heldItem.transform.rotation = holdPosition.rotation; // Rotate item to match the holdPosition's rotation
-            heldItem.transform.parent = holdPosition; // Change the item's parent to holdPosition so we can move it around properly.
+
+            Physics.IgnoreCollision(holdPosition.transform.parent.GetComponent<Collider>(), heldItem.GetComponent<Collider>(), true);
+            heldItem.AddComponent<FixedJoint>();
+            FixedJoint fixJoint = heldItem.GetComponent<FixedJoint>();
+            fixJoint.GetComponent<FixedJoint>().connectedBody = holdPosition.GetComponent<Rigidbody>();
+            joined = true;
 
             // Freeze all the item's rigidbody constraints so we can freely move the item as a child of the player.
-            rbItem.constraints = RigidbodyConstraints.FreezeAll;
-
-            // Change the held vairable in item's grabbableCollision script for it to properly react to collisions with other things (like walls and such)
-            heldItem.GetComponent<grabbableCollision>().held = true;
+            //rbItem.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         }
     }
 
     private void Release()
     {
         pickup = false;
-        // Revert holdPosition back to where it was before picking up the item
-        Vector3 oldHoldPosition = new Vector3(holdPosition.position.x - transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2,
-                holdPosition.position.y, holdPosition.position.z - transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
-        Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
-        heldItem.transform.parent = null; // Reset the item's parent to stop it from moving with the player
-        
-        if (rbItem != null)
+        if (joined)
         {
-            rbItem.constraints = RigidbodyConstraints.None; // Disable item's rigidbody constraints so its physics are back to normal
+            Destroy(heldItem.GetComponent<FixedJoint>());
+            joined = false;
         }
-        heldItem.GetComponent<grabbableCollision>().held = false; // Stop the item from reacting in held mode in its grabbableCollision script
+        Physics.IgnoreCollision(holdPosition.transform.parent.GetComponent<Collider>(), heldItem.GetComponent<Collider>(), false);
+        // Revert holdPosition back to where it was before picking up the item
+        holdPosition.transform.position = transform.parent.position + transform.parent.forward * 0.5f;
+        //Vector3 oldHoldPosition = new Vector3(holdPosition.position.x - transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2,
+        //holdPosition.position.y, holdPosition.position.z - transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
+        Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
+        rbItem.constraints = RigidbodyConstraints.None; // Disable item's rigidbody constraints so its physics are back to normal
         heldItem = null; // Set heldItem back to null
-        holdPosition.position = oldHoldPosition; // Move holdPosition back to its old position.
+        //holdPosition.position = oldHoldPosition; // Move holdPosition back to its old position.
         timestamp = Time.time + pickupCooldown; // Take a timestamp of when the item was released in order to check the pickup cooldown
     }
 
