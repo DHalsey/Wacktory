@@ -11,7 +11,7 @@ public class couchPlayerPickUp : MonoBehaviour {
 
     private Transform holdPosition; // Position at which the item will be held
     private bool pickup = false; // Whether or not an item is picked up
-    private bool joined = false;
+    private bool joined = false; // Whether or not a joint between the hold position and item is made
 
     private GameObject heldItem;
     private couchPlayerMovement parentScript;
@@ -22,19 +22,14 @@ public class couchPlayerPickUp : MonoBehaviour {
 
     private string throwButtonName;
 
-    //private SphereCollider holdPositionCollider;
-
 	// Use this for initialization
 	void Start () {
         holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition"); // Set reference to CouchPlayerHoldPosition object in the player's children
-        //holdPosition = gameObject.transform.parent;
         parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>(); // Get the player's couchPlayerMovement script
 
         // Input names for holding and throwing objects
         holdButtonName = "Hold" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
         throwButtonName = "Throw" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-
-        //holdPositionCollider = holdPosition.GetComponent<SphereCollider>(); // Get a reference to the holdPosition's collider in order to disable/enable it accordingly
 	}
 	
 	// Update is called once per frame
@@ -66,18 +61,6 @@ public class couchPlayerPickUp : MonoBehaviour {
         {
             Throw();
         }
-
-        // If we are not holding any item, disable the holdPosition collider (so we we don't have an invisible collider in front of us)
-        //if (heldItem == null && holdPositionCollider.enabled)
-        //{
-        //    holdPositionCollider.enabled = false;
-        //}
-
-        //// If we we are holding an item and the holdPositio collider is disabled, enable it (so the item does not go through walls)
-        //if (heldItem != null && !holdPositionCollider.enabled)
-        //{
-        //    holdPositionCollider.enabled = true;
-        //}
 	}
 
     // Check if there is a grabbable object in front of us.
@@ -128,12 +111,9 @@ public class couchPlayerPickUp : MonoBehaviour {
         Physics.IgnoreCollision(holdPosition.transform.parent.GetComponent<Collider>(), heldItem.GetComponent<Collider>(), false);
         // Revert holdPosition back to where it was before picking up the item
         holdPosition.transform.position = transform.parent.position + transform.parent.forward * 0.5f;
-        //Vector3 oldHoldPosition = new Vector3(holdPosition.position.x - transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2,
-        //holdPosition.position.y, holdPosition.position.z - transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
         Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
         rbItem.constraints = RigidbodyConstraints.None; // Disable item's rigidbody constraints so its physics are back to normal
         heldItem = null; // Set heldItem back to null
-        //holdPosition.position = oldHoldPosition; // Move holdPosition back to its old position.
         timestamp = Time.time + pickupCooldown; // Take a timestamp of when the item was released in order to check the pickup cooldown
     }
 
