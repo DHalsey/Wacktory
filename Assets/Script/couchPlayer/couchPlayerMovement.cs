@@ -68,8 +68,8 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         // Store input to movementInput vector3 every frame.
-        movementInput = new Vector3(Input.GetAxis(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
-        turnInput = new Vector3(Input.GetAxis(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
+        movementInput = new Vector3(Input.GetAxisRaw(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
+        turnInput = new Vector3(Input.GetAxisRaw(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
 
         // If the jump button is pressed, jump.
         // Could not use GetButtonDown properly sicne for some reason it would always allow player to double jump.
@@ -141,8 +141,6 @@ public class couchPlayerMovement : MonoBehaviour {
     // Handle automatic turning
     private void TurnPlayer()
     {
-        Debug.Log("Input X: " + movementInput.x);
-        Debug.Log("Input Z: " + movementInput.z);
         float angleToTurnTo;
 
         // If movement is being applied from the input, calculate the angle that we need to turn to.
