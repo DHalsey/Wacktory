@@ -57,7 +57,7 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         // Store input to movementInput vector3 every frame.
-        movementInput = new Vector3(Input.GetAxisRaw(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
+        movementInput = new Vector3(Input.GetAxis(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
 
         // If the jump button is pressed, jump.
         // Could not use GetButtonDown properly sicne for some reason it would always allow player to double jump.
@@ -98,38 +98,20 @@ public class couchPlayerMovement : MonoBehaviour {
 
     }
 
-    // Thanks for this insane trigonometry, Dustin
-    // ---------------------------------------------------------------------------
+    // Fucntion that finds the turn angle for the player based on their inputs 
+    // From user "YoungDeveloper" in:
+    // https://answers.unity.com/questions/1032673/how-to-get-0-360-degree-from-two-points.html
+    // ----------------------------------------------------------------------------------------
     float calculateAngle(float x, float y)
     {
-        float angle = 0;
-        if (x > 0 && y == 0)
-        { //prevents divide by zero for perfect 90* angle
-            angle = 90.0f;
-        }
-        else if (x < 0 && y == 0)
-        { //prevents divide by zero for perfect -90* angle
-            angle = -90.0f;
-        }
-        else if (x != 0 && y != 0)
-        { //if the stick isnt rested, handle normal turnng
-            angle = Mathf.Rad2Deg * Mathf.Atan(x / y);
-            if (y < 0)
-            {
-                angle += 180; //handles -y rotations since tan is [-PI/2,PI/2]
-            }
-        }
-        else if (x == 0 && y < 0)
+        float angle = (Mathf.Atan2(x, y) / Mathf.PI) * 180f;
+        if (angle < 0)
         {
-            angle = 180;
-        }
-        if (angle > 180)
-        {
-            angle -= 360;
+            angle += 360;
         }
         return angle;
     }
-    // ----------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
 
     // Handle player movement
     private void MovePlayer()
@@ -147,6 +129,8 @@ public class couchPlayerMovement : MonoBehaviour {
     // Handle automatic turning
     private void TurnPlayer()
     {
+        Debug.Log("Input X: " + movementInput.x);
+        Debug.Log("Input Z: " + movementInput.z);
         // If movement is being applied from the input, calculate the angle that we need to turn to.
         if (movementInput.magnitude > 0f)
         {
@@ -170,7 +154,7 @@ public class couchPlayerMovement : MonoBehaviour {
         rb.AddForce(Vector3.down * 9.81f * gravity);
     }
     
-    // Only jump if we are groudned and have not already jumped (not in midair)
+    // Only jump if we are grounded and have not already jumped (not in midair)
     private void Jump()
     {
         if (isGrounded && !jumped)
