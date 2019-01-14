@@ -51,7 +51,6 @@ public class truckController : MonoBehaviour
         waitTime = 10;
         //at this point we have all the components for the construction of the truck
         thisTruck = new Truck(waitTime, groceryList, numItems);
-
     }
 
     // Update is called once per frame
@@ -114,13 +113,14 @@ public class truckController : MonoBehaviour
                 end = false;
                 //truckManager.GetComponent<truck_manager>().changeMovingStatus();
                 truckStatus = "delete";
+                Debug.Log(thisTruck.compareLists());
             }
         }
-        else if(truckStatus == "delete")
-        {
-            truckManager.GetComponent<truck_manager>().deleteTruck();
+        //else if(truckStatus == "delete")
+        //{
+        //    truckManager.GetComponent<truck_manager>().deleteTruck();
             //Destroy(this.gameObject);
-        }
+        //}
     }
 
     public void setMoveToWindow()

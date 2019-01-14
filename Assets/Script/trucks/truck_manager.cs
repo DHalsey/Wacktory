@@ -9,7 +9,6 @@ public class truck_manager : MonoBehaviour {
     private float time2;
     //the total amount of trucks we want to have on the map at a time
     private int maxTruckCount;
-    private int currentTruckCount;
     //a listcontaining all possible items
     //private List<string> items = new List<string>();
     public GameObject truck;
@@ -19,14 +18,13 @@ public class truck_manager : MonoBehaviour {
     //truck stops
     public GameObject first_stop;
     public GameObject second_stop;
-    private bool changeInTruck;
+    private bool delete = false;
 
 	// Use this for initialization
 	void Start () {
         //set the current time as well as the max truck count
         time1 = Time.time;
         maxTruckCount = 3;
-        currentTruckCount = 0;
 
         //makes an list of strings for all the possible items this can be changed later to something else for now just hard
         //coding it in
@@ -42,39 +40,37 @@ public class truck_manager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //have a variable that checks to see if we manipulated the queue in any way (truck added or deleted)
-        changeInTruck = false;
         //update time2
         time2 = Time.time;
         //if 10 seconds have passed in the game and we have less than the max trucks spawn a truck in
-        if(time2- time1 >= 8 && currentTruckCount < maxTruckCount)
+        if(time2- time1 >= 8 && truckQueue.Count < maxTruckCount)
         {
             //reset time1 to be current time
             time1 = Time.time;
             GameObject newTruck = Instantiate(truck, this.transform.position, Quaternion.identity) as GameObject;
             //once the new truck has been created we add it to the truck queue and add 1 to truck count
             truckQueue.Enqueue(newTruck);
-            currentTruckCount++;
-            changeInTruck = true;
-        }
-        //put something here for when trucks leave
-
-        //if a truck was added to the queue or popped off we need to recreate the array that holds a copy of the queue
-        //this is so we don't copy the array every single frame and will help optimization
-        if(changeInTruck == true)
-        {
             truckQueueCopy = truckQueue.ToArray();
         }
+        //put something here for when trucks leave
         
+        
+        //Debug.Log(truckQueue.Count);
         //Debug.Log(currentTruckCount);
         //just check if the first truck needs to be moved and if so run moveTrucks otherwise it's pointless
         if(truckQueue.Count > 0)
         {
-            Debug.Log(truckQueue.Count);
             string status = truckQueueCopy[0].GetComponent<truckController>().getStatus();
             //Debug.Log(status);
             if (status == "start" || status == "waitForLoad" || status == "complete")
             {
                 moveTrucks();
+            }
+            else if(status == "delete")
+            {
+                GameObject temp = truckQueue.Dequeue();
+                Destroy(temp.gameObject);
+                truckQueueCopy = truckQueue.ToArray();
             }
         }
         //Debug.Log(currentTruckCount);
@@ -104,8 +100,7 @@ public class truck_manager : MonoBehaviour {
 
     public void deleteTruck()
     {
-        truckQueue.Dequeue();
-        changeInTruck = true;
+        delete = true;   
     }
     //public List<string> getItemList()
     //{

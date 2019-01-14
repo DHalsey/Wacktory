@@ -839,6 +839,7 @@ MonoBehaviour:
   windowStop: {fileID: 1013815938126642, guid: 62ae2594599cb2246bf13f9e28b7335b, type: 2}
   loadingStop: {fileID: 1446348137174656, guid: 33c682db16953014e870c33a4fd0af98,
     type: 2}
+  truck_end: {fileID: 1903976484440708, guid: 1b36ae74e1a9b1a4bb3c51804711d27c, type: 2}
 --- !u!136 &136166989234222594
 CapsuleCollider:
   m_ObjectHideFlags: 1
