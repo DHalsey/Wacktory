@@ -202,6 +202,7 @@ public class couchPlayerMovement : MonoBehaviour {
         Quaternion resetAngle = Quaternion.identity;
         transform.rotation = Quaternion.Lerp(transform.rotation, resetAngle, turnSpeed);
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        transform.Find("CouchPlayerHoldPosition").transform.rotation = transform.rotation;
     }
 
     // Handles player death. Right now, it only disables the player's movement.
