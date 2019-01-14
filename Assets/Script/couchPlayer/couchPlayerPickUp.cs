@@ -23,6 +23,8 @@ public class couchPlayerPickUp : MonoBehaviour {
     private string throwButtonName;
     private float throwButtonInput;
 
+    public PhysicMaterial heldItemPhysicMaterial; // Physics material used to disable held item's friction and bounciness to reduce collision anomalies
+
 	// Use this for initialization
 	void Start () {
         holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition"); // Set reference to CouchPlayerHoldPosition object in the player's children
@@ -86,9 +88,11 @@ public class couchPlayerPickUp : MonoBehaviour {
             heldItem = item;
             
             // Change the holdPosition's transform to fit the item's size.
-            holdPosition.transform.position = transform.parent.position + transform.parent.forward * (0.4f + (heldItem.GetComponent<Collider>().bounds.size.z / 2));
-            heldItem.transform.rotation = holdPosition.rotation;
+            holdPosition.transform.position = transform.parent.position + transform.parent.up * ((transform.parent.GetComponent<Collider>().bounds.size.y / 2) 
+                + (heldItem.GetComponent<Collider>().bounds.size.y / 2));
+            heldItem.transform.rotation = holdPosition.rotation; // Set item's rotation to match player's holdPosition
             heldItem.transform.position = holdPosition.position; // Place item in the holdPosition
+            heldItem.GetComponent<Collider>().material = heldItemPhysicMaterial; // Disable item's friction with pre-defined physics material when holding item
 
             Physics.IgnoreCollision(holdPosition.transform.parent.GetComponent<Collider>(), heldItem.GetComponent<Collider>(), true);
             heldItem.AddComponent<FixedJoint>();
@@ -106,9 +110,10 @@ public class couchPlayerPickUp : MonoBehaviour {
             Destroy(heldItem.GetComponent<FixedJoint>());
             joined = false;
         }
+        heldItem.GetComponent<Collider>().material = null; // Re-enable item's friction when released
         Physics.IgnoreCollision(holdPosition.transform.parent.GetComponent<Collider>(), heldItem.GetComponent<Collider>(), false);
         // Revert holdPosition back to where it was before picking up the item
-        holdPosition.transform.position = transform.parent.position + transform.parent.forward * 0.5f;
+        holdPosition.transform.position = transform.parent.position + transform.parent.up * (transform.parent.GetComponent<Collider>().bounds.size.y / 2);
         Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
         rbItem.constraints = RigidbodyConstraints.None; // Disable item's rigidbody constraints so its physics are back to normal
         heldItem = null; // Set heldItem back to null

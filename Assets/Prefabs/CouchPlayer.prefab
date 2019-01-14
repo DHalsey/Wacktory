@@ -110,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534425312590372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.181, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4519238240511088}
@@ -123,7 +123,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1680585515003862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.29, y: 4.746, z: -10.8}
+  m_LocalPosition: {x: 0, y: 1.66, z: 0}
   m_LocalScale: {x: 0.5, y: 0.6, z: 0.5}
   m_Children:
   - {fileID: 4810894620166706}
@@ -432,6 +432,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwForce: 10
   pickupCooldown: 0.5
+  heldItemPhysicMaterial: {fileID: 13400000, guid: 7d3def9324e7d1748bf35f50430ff533,
+    type: 2}
 --- !u!135 &135237388948523152
 SphereCollider:
   m_ObjectHideFlags: 1
