@@ -18,14 +18,21 @@ public class couchPlayerMovement : MonoBehaviour {
 
     [HideInInspector] public bool ragdolling; // When the player is ragdolling.
     
-    private string verticalAxisName;   // Name of controller vertical axis for this player
-    private string horizontalAxisName; // Name of controller horizontal axis for this player
-    private Vector3 movementInput;     // Vector3 that holds the controller input for this player
+    // Left stick input
+    private string verticalMoveAxisName;
+    private string horizontalMoveAxisName;
+    private Vector3 movementInput; // Vector3 that holds the left stick input for this player
+
+    // Right stick input
+    private string verticalTurnAxisName;
+    private string horizontalTurnAxisName;
+    private Vector3 turnInput; // Vector3 that holds the right stick input for this player
+
     private string jumpButtonName;
     private Rigidbody rb;
 
-    [HideInInspector] public bool isGrounded;           // Checks if the player is on some level surface to jump from
-    [HideInInspector] public bool jumped;               // If player already jumped (is in midair)
+    [HideInInspector] public bool isGrounded;  // Checks if the player is on some level surface to jump from
+    [HideInInspector] public bool jumped;      // If player already jumped (is in midair)
 
     private IEnumerator ragdoll; // IEnumerator reference that we can use to check if the ragdoll coroutine is null
 
@@ -45,8 +52,12 @@ public class couchPlayerMovement : MonoBehaviour {
     private void Start()
     {
         // Add the player's number to get the right input from the Input Manager
-        verticalAxisName = "Vertical" + playerNumber; 
-        horizontalAxisName = "Horizontal" + playerNumber;
+        verticalMoveAxisName = "VerticalMove" + playerNumber; 
+        horizontalMoveAxisName = "HorizontalMove" + playerNumber;
+
+        verticalTurnAxisName = "VerticalTurn" + playerNumber;
+        horizontalTurnAxisName = "HorizontalTurn" + playerNumber;
+
         jumpButtonName = "Jump" + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -57,7 +68,8 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         // Store input to movementInput vector3 every frame.
-        movementInput = new Vector3(Input.GetAxis(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
+        movementInput = new Vector3(Input.GetAxis(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
+        turnInput = new Vector3(Input.GetAxis(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
 
         // If the jump button is pressed, jump.
         // Could not use GetButtonDown properly sicne for some reason it would always allow player to double jump.
@@ -131,10 +143,17 @@ public class couchPlayerMovement : MonoBehaviour {
     {
         Debug.Log("Input X: " + movementInput.x);
         Debug.Log("Input Z: " + movementInput.z);
+        float angleToTurnTo;
+
         // If movement is being applied from the input, calculate the angle that we need to turn to.
-        if (movementInput.magnitude > 0f)
+        if (turnInput.magnitude > 0f)
         {
-            float angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
+            angleToTurnTo = calculateAngle(turnInput.x, turnInput.z);
+            turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
+        }
+        else if (movementInput.magnitude > 0f)
+        {
+            angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
             turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
         }
 

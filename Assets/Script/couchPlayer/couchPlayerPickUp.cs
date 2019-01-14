@@ -20,6 +20,7 @@ public class couchPlayerPickUp : MonoBehaviour {
     private float holdButtonInput;
 
     private string throwButtonName;
+    private float throwButtonInput;
 
     private SphereCollider holdPositionCollider;
 
@@ -39,6 +40,8 @@ public class couchPlayerPickUp : MonoBehaviour {
 	void Update () {
 
         holdButtonInput = Input.GetAxis(holdButtonName);
+        throwButtonInput = Input.GetAxis(throwButtonName);
+
         ragdolling = parentScript.ragdolling;
 
         // Check input for pickup. Only true if something isn't already picked up, pickup cooldown is over, and we're not ragdolling
@@ -60,7 +63,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         }
 
         // If the throw button is pressed
-        if (Input.GetButtonDown(throwButtonName) && heldItem != null)
+        if (throwButtonInput > 0.0f && heldItem != null)
         {
             Throw();
         }
