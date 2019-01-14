@@ -21,6 +21,7 @@ public class couchPlayerPickUp : MonoBehaviour {
     private float holdButtonInput;
 
     private string throwButtonName;
+    private float throwButtonInput;
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +37,8 @@ public class couchPlayerPickUp : MonoBehaviour {
 	void Update () {
 
         holdButtonInput = Input.GetAxis(holdButtonName);
+        throwButtonInput = Input.GetAxis(throwButtonName);
+
         ragdolling = parentScript.ragdolling;
 
         // Check input for pickup. Only true if something isn't already picked up, pickup cooldown is over, and we're not ragdolling
@@ -57,7 +60,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         }
 
         // If the throw button is pressed
-        if (Input.GetButtonDown(throwButtonName) && heldItem != null)
+        if (throwButtonInput > 0.0f && heldItem != null)
         {
             Throw();
         }
@@ -81,9 +84,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         if (rbItem != null && !joined)
         {
             heldItem = item;
-
-            //heldItem.transform.parent = holdPosition; // Change the item's parent to holdPosition so we can move it around properly.
-
+            
             // Change the holdPosition's transform to fit the item's size.
             holdPosition.transform.position = transform.parent.position + transform.parent.forward * (0.4f + (heldItem.GetComponent<Collider>().bounds.size.z / 2));
             heldItem.transform.rotation = holdPosition.rotation;
@@ -94,9 +95,6 @@ public class couchPlayerPickUp : MonoBehaviour {
             FixedJoint fixJoint = heldItem.GetComponent<FixedJoint>();
             fixJoint.GetComponent<FixedJoint>().connectedBody = holdPosition.GetComponent<Rigidbody>();
             joined = true;
-
-            // Freeze all the item's rigidbody constraints so we can freely move the item as a child of the player.
-            //rbItem.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         }
     }
 
@@ -114,6 +112,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
         rbItem.constraints = RigidbodyConstraints.None; // Disable item's rigidbody constraints so its physics are back to normal
         heldItem = null; // Set heldItem back to null
+
         timestamp = Time.time + pickupCooldown; // Take a timestamp of when the item was released in order to check the pickup cooldown
     }
 

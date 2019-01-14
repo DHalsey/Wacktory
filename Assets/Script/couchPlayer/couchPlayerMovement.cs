@@ -18,14 +18,21 @@ public class couchPlayerMovement : MonoBehaviour {
 
     [HideInInspector] public bool ragdolling; // When the player is ragdolling.
     
-    private string verticalAxisName;   // Name of controller vertical axis for this player
-    private string horizontalAxisName; // Name of controller horizontal axis for this player
-    private Vector3 movementInput;     // Vector3 that holds the controller input for this player
+    // Left stick input
+    private string verticalMoveAxisName;
+    private string horizontalMoveAxisName;
+    private Vector3 movementInput; // Vector3 that holds the left stick input for this player
+
+    // Right stick input
+    private string verticalTurnAxisName;
+    private string horizontalTurnAxisName;
+    private Vector3 turnInput; // Vector3 that holds the right stick input for this player
+
     private string jumpButtonName;
     private Rigidbody rb;
 
-    [HideInInspector] public bool isGrounded;           // Checks if the player is on some level surface to jump from
-    [HideInInspector] public bool jumped;               // If player already jumped (is in midair)
+    [HideInInspector] public bool isGrounded;  // Checks if the player is on some level surface to jump from
+    [HideInInspector] public bool jumped;      // If player already jumped (is in midair)
 
     private IEnumerator ragdoll; // IEnumerator reference that we can use to check if the ragdoll coroutine is null
 
@@ -45,8 +52,12 @@ public class couchPlayerMovement : MonoBehaviour {
     private void Start()
     {
         // Add the player's number to get the right input from the Input Manager
-        verticalAxisName = "Vertical" + playerNumber; 
-        horizontalAxisName = "Horizontal" + playerNumber;
+        verticalMoveAxisName = "VerticalMove" + playerNumber; 
+        horizontalMoveAxisName = "HorizontalMove" + playerNumber;
+
+        verticalTurnAxisName = "VerticalTurn" + playerNumber;
+        horizontalTurnAxisName = "HorizontalTurn" + playerNumber;
+
         jumpButtonName = "Jump" + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -57,7 +68,8 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         // Store input to movementInput vector3 every frame.
-        movementInput = new Vector3(Input.GetAxisRaw(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
+        movementInput = new Vector3(Input.GetAxis(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
+        turnInput = new Vector3(Input.GetAxis(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
 
         // If the jump button is pressed, jump.
         // Could not use GetButtonDown properly sicne for some reason it would always allow player to double jump.
@@ -98,38 +110,20 @@ public class couchPlayerMovement : MonoBehaviour {
 
     }
 
-    // Thanks for this insane trigonometry, Dustin
-    // ---------------------------------------------------------------------------
+    // Fucntion that finds the turn angle for the player based on their inputs 
+    // From user "YoungDeveloper" in:
+    // https://answers.unity.com/questions/1032673/how-to-get-0-360-degree-from-two-points.html
+    // ----------------------------------------------------------------------------------------
     float calculateAngle(float x, float y)
     {
-        float angle = 0;
-        if (x > 0 && y == 0)
-        { //prevents divide by zero for perfect 90* angle
-            angle = 90.0f;
-        }
-        else if (x < 0 && y == 0)
-        { //prevents divide by zero for perfect -90* angle
-            angle = -90.0f;
-        }
-        else if (x != 0 && y != 0)
-        { //if the stick isnt rested, handle normal turnng
-            angle = Mathf.Rad2Deg * Mathf.Atan(x / y);
-            if (y < 0)
-            {
-                angle += 180; //handles -y rotations since tan is [-PI/2,PI/2]
-            }
-        }
-        else if (x == 0 && y < 0)
+        float angle = (Mathf.Atan2(x, y) / Mathf.PI) * 180f;
+        if (angle < 0)
         {
-            angle = 180;
-        }
-        if (angle > 180)
-        {
-            angle -= 360;
+            angle += 360;
         }
         return angle;
     }
-    // ----------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
 
     // Handle player movement
     private void MovePlayer()
@@ -147,10 +141,19 @@ public class couchPlayerMovement : MonoBehaviour {
     // Handle automatic turning
     private void TurnPlayer()
     {
+        Debug.Log("Input X: " + movementInput.x);
+        Debug.Log("Input Z: " + movementInput.z);
+        float angleToTurnTo;
+
         // If movement is being applied from the input, calculate the angle that we need to turn to.
-        if (movementInput.magnitude > 0f)
+        if (turnInput.magnitude > 0f)
         {
-            float angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
+            angleToTurnTo = calculateAngle(turnInput.x, turnInput.z);
+            turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
+        }
+        else if (movementInput.magnitude > 0f)
+        {
+            angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
             turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
         }
 
