@@ -12,6 +12,9 @@ public class couchPlayerMovement : MonoBehaviour {
     public float jumpForce = 350.0f;
     public float timeToGetUp = 3.0f;
 
+    public string controllerType;
+    public ControllerMap inputMap;
+
     private Collider coll;
 
     [HideInInspector] public bool explosion; // When the player is being affected by an explosion. This is accessed by the explosion.cs script
@@ -45,9 +48,9 @@ public class couchPlayerMovement : MonoBehaviour {
     private void Start()
     {
         // Add the player's number to get the right input from the Input Manager
-        verticalAxisName = "Vertical" + playerNumber; 
-        horizontalAxisName = "Horizontal" + playerNumber;
-        jumpButtonName = "Jump" + playerNumber;
+        verticalAxisName = inputMap.VerticalMovementAxis + playerNumber; 
+        horizontalAxisName = inputMap.HorizontalMovementAxis + playerNumber;
+        jumpButtonName = inputMap.JumpButton + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         coll = GetComponent<Collider>();
@@ -64,6 +67,7 @@ public class couchPlayerMovement : MonoBehaviour {
         if (Input.GetAxis(jumpButtonName) > 0.0f)
         {
             Jump();
+            Debug.Log(Input.GetJoystickNames().Length);
         }
 
         // If there was an explosion, start ragdoll coroutine (ragdoll for some amount of time)

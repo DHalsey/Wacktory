@@ -7,10 +7,15 @@ public class couchPlayerPickUp : MonoBehaviour {
     public float throwForce = 10.0f;
     public float pickupCooldown = 1.0f;
 
+    public string controllerType;
+    public ControllerMap inputMap;
+
     private float timestamp;
 
     private Transform holdPosition;
     private bool pickup = false;
+    private bool interPressed = false; //boolean check that is true when pressed and set to false once released
+
 
     private GameObject heldItem;
     private couchPlayerMovement parentScript;
@@ -28,8 +33,8 @@ public class couchPlayerPickUp : MonoBehaviour {
         holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition");
         parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>();
 
-        holdButtonName = "Hold" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-        throwButtonName = "Throw" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        holdButtonName = inputMap.InteractButton + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        throwButtonName = inputMap.ThrowButton + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
 
         holdPositionCollider = holdPosition.GetComponent<SphereCollider>();
 	}
@@ -40,9 +45,12 @@ public class couchPlayerPickUp : MonoBehaviour {
         holdButtonInput = Input.GetAxis(holdButtonName);
         ragdolling = parentScript.ragdolling;
 
-        if (holdButtonInput > 0.0f && pickup == false && timestamp <= Time.time && !ragdolling)
+        if (holdButtonInput == 0)
+            interPressed = false;
+        if (holdButtonInput > 0.0f && pickup == false && timestamp <= Time.time && !ragdolling && interPressed == false)
         {
             pickup = true;
+            interPressed = true;
         }
 
         if (ragdolling && heldItem != null)
@@ -50,9 +58,10 @@ public class couchPlayerPickUp : MonoBehaviour {
             Release();
         }
 
-        if (holdButtonInput == 0 && heldItem != null)
+        if (holdButtonInput > 0 && heldItem != null && interPressed == false)
         {
             Release();
+            interPressed = true;
         }
 
         if (Input.GetButtonDown(throwButtonName) && heldItem != null)
