@@ -62,7 +62,7 @@ public class runWithTrackpad : MonoBehaviour {
         float newY = (-movementDirection.x * collisionNormal.x - movementDirection.z * collisionNormal.z) / collisionNormal.y; //gets the y value for the vector perpendicular to the ground collision
         Vector3 newMovement = new Vector3(movementDirection.x, newY, movementDirection.z); //the new direction of movement that is perpendicular to the normal we are walking on.  This ensures we can move up ramps properly
         rb.AddForce(newMovement); //adds the force in a direction that mathces the slops of the incline we are on
-        //DrawDebugMovement(newMovement); //comment this line out to hide the debug draw line
+        DrawDebugMovement(newMovement); //comment this line out to hide the debug draw line
     }
 
     //prevents the player from moving faster than the maximum speed

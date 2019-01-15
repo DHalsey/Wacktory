@@ -69,7 +69,7 @@ public class talon_CombinerSide : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if(neededItemCount >= howMany && buttonForCombining.GetComponent<talon_buttonTrigger>().isPressed && !hasBeenCombined){
+        if(neededItemCount >= howMany && buttonForCombining.GetComponent<buttonTrigger>().isPressed && !hasBeenCombined){
             // Setting hasBeenCombined to true so this if statement is only true once. Otherwise, the combiner will be true for as long as there is a trigger on the button
             hasBeenCombined = true;
             Debug.Log("I'M COMBINEDDDDDDD!!!!");
