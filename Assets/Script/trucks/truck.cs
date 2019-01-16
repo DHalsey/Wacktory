@@ -10,8 +10,6 @@ public class Truck {
     public int numItems = 0;
 
     //PRIVATE VARIABLES=======================================
-    //The time that the truck is willing to wait in seconds
-    private int waitTime;
     //dictionary to hold the number of each item the truck needs
     private Dictionary<string, int> itemList;
     //dictionary to hold the number of each item the truck has received thus far
@@ -29,8 +27,6 @@ public class Truck {
         //initializes both dictionaries
         itemList = new Dictionary<string, int>();
         itemsReceived =  new Dictionary<string, int>();
-        //initializes waitTime to parameter
-        this.waitTime = waitTime;
 
         //loops through the provided arry from parameter
         for(int i = 0; i < numItems; i++)
@@ -106,5 +102,15 @@ public class Truck {
             //if we have the item  in the required quantity or a surplus amount in that case we don't need to do anything
         }
         return missingItems;
+    }
+    //returns a string representation of the itemlist
+    public string getItemList()
+    {
+        string groceryList = "";
+        foreach (var item in itemList)
+        {
+            groceryList = (groceryList + item.Key + ": " + item.Value + "\n");
+        }
+        return groceryList;
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class truckController : MonoBehaviour
 {
 
-    private Truck thisTruck;
+    public Truck thisTruck;
     public GameObject truckManager;
     public GameObject windowStop;
     public GameObject loadingStop;
     public GameObject truck_end;
+    public GameObject onScreenText;
     //list of all the possible items
     private List<string> itemList = new List<string>();
     //total # of items the truck wants
@@ -27,14 +29,15 @@ public class truckController : MonoBehaviour
     private bool loading = false;
     private bool end = false;
     private string truckStatus = "start";
+    
     // Use this for initialization
 
     void Start()
     {
         //on creation we want to create a random item list for the truck to need
         //first we make a list of all possible items
-        itemList.Add("banana");
-        itemList.Add("bomb");
+        itemList.Add("Banana");
+        itemList.Add("Bomb");
         //now we can choose how many items we want and then randomly select items from the list for testing it will be set to 5
         numItems = 5;
         int rand;
@@ -51,12 +54,15 @@ public class truckController : MonoBehaviour
         waitTime = 10;
         //at this point we have all the components for the construction of the truck
         thisTruck = new Truck(waitTime, groceryList, numItems);
+
+        onScreenText = GameObject.Find("Canvas/truckText");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //in here will put some code to detect what items have been given to the truck and what not
+        //if the truck has the OK to move to the window move it to the window and set status to moving
         if (window == true)
         {
             truckStatus = "moving";
@@ -64,42 +70,45 @@ public class truckController : MonoBehaviour
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(this.transform.position, windowStop.transform.position, fracJourney);
-            //Debug.Log(Vector3.Distance(transform.position, windowStop.transform.position));
+            //once the truck has reached the window set status to ordering and wait
             if (Vector3.Distance(transform.position, windowStop.transform.position) < .5f)
             {
                 window = false;
-                //truckManager.GetComponent<truck_manager>().changeMovingStatus();
                 truckStatus = "ordering";
                 startTime = Time.time;
             }
         }
         else if (truckStatus == "ordering")
         {
-            //Debug.Log("status is ordering");
+            //while the truck is ordering wait 5 seconds and then set status to waitForLoad
             if (Time.time - startTime > 5f)
             {
                 truckStatus = "waitForLoad";
             }
         }
+        //one truck gets the OK to start loading set status to moving and move it to the loading bay
         else if(loading == true)
         {
             truckStatus = "moving";
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(this.transform.position, loadingStop.transform.position, fracJourney);
+            //once the truck arrives at loading bay set status to loading
             if (Vector3.Distance(transform.position, loadingStop.transform.position) < .5f)
             {
                 loading = false;
-                //truckManager.GetComponent<truck_manager>().changeMovingStatus();
                 truckStatus = "loading";
+                onScreenText.GetComponent<Text>().text += thisTruck.getItemList();
                 startTime = Time.time;
             }
         }
         else if(truckStatus == "loading")
         {
+            //wait until the timer expires at the loading bay (Later if we have received enough items)
             if(Time.time - startTime > waitTime)
             {
                 truckStatus = "complete";
+                onScreenText.GetComponent<Text>().text = "";
             }
         }
         else if(end == true)
@@ -113,7 +122,7 @@ public class truckController : MonoBehaviour
                 end = false;
                 //truckManager.GetComponent<truck_manager>().changeMovingStatus();
                 truckStatus = "delete";
-                Debug.Log(thisTruck.compareLists());
+                //Debug.Log(thisTruck.compareLists());
             }
         }
         //else if(truckStatus == "delete")
@@ -123,6 +132,7 @@ public class truckController : MonoBehaviour
         //}
     }
 
+    //sets the move variable to true and sets timers for the lerp (called from truck_manager)
     public void setMoveToWindow()
     {
         //Debug.Log("setting window to true");
@@ -131,18 +141,21 @@ public class truckController : MonoBehaviour
         journeyLength = Vector3.Distance(this.transform.position, windowStop.transform.position);
         //Debug.Log(journeyLength);
     }
+    //sets the loading variable to true and sets timers for the lerp
     public void setMoveToLoading()
     {
         loading = true;
         startTime = Time.time;
         journeyLength = Vector3.Distance(this.transform.position, loadingStop.transform.position);
     }
+    //sets the end variable to true and sets timers for the lerp
     public void setMoveToEnd()
     {
         end = true;
         startTime = Time.time;
         journeyLength = Vector3.Distance(this.transform.position, truck_end.transform.position);
     }
+    //returns the string truckStatus
     public string getStatus()
     {
         return truckStatus;

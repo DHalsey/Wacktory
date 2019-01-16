@@ -15,10 +15,6 @@ public class truck_manager : MonoBehaviour {
     //queue for holding the trucks
     private Queue<GameObject> truckQueue = new Queue<GameObject>();
     private GameObject[] truckQueueCopy;
-    //truck stops
-    public GameObject first_stop;
-    public GameObject second_stop;
-    private bool delete = false;
 
 	// Use this for initialization
 	void Start () {
@@ -28,8 +24,8 @@ public class truck_manager : MonoBehaviour {
 
         //makes an list of strings for all the possible items this can be changed later to something else for now just hard
         //coding it in
-        //items.Add("banana");
-        //items.Add("bomb");
+        //items.Add("Banana");
+        //items.Add("Bomb");
         //Debug.Log(items.Count);
         //we need an array that can store a copy of the truck queue so that we can reference the trucks that aren't at the top
         //of the queue
@@ -77,9 +73,11 @@ public class truck_manager : MonoBehaviour {
         
 	}
 
+    //moves all the trucks in the queue
     void moveTrucks()
     {
-        //dealing with edge cases first, if this is the first truck
+        //for every truck in the queue check its status and then move it accordingly. Because this method is only called when the
+        //first truck in the queue is being moved we don't need to worry about them bumping into each other.
         for(int i = 0; i < truckQueue.Count; i++)
         {
    
@@ -97,14 +95,5 @@ public class truck_manager : MonoBehaviour {
             }
         }
     }
-
-    public void deleteTruck()
-    {
-        delete = true;   
-    }
-    //public List<string> getItemList()
-    //{
-        //Debug.Log(items.Count);
-        //return items;
-    //}
+    
 }
