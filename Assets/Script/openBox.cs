@@ -33,7 +33,9 @@ public class openBox : MonoBehaviour {
         if (other.gameObject.tag == "opensBox") {
             Debug.Log("Opened Box with Trigger");
             if (itemToSpawn) {
-                Instantiate(itemToSpawn.transform, transform.position+(Vector3.up*0.2f), transform.rotation);
+                GameObject spawnedItem = Instantiate(itemToSpawn, transform.position + (Vector3.up * 0.2f), transform.rotation);
+                spawnedItem.name = itemToSpawn.name; //remove "(Clone)" from the name
+
             }
             Destroy(gameObject);
         }

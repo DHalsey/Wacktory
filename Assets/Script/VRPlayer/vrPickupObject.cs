@@ -16,6 +16,8 @@ public class vrPickupObject : MonoBehaviour {
     private GameObject grabbedObject;
     private float pullAmount;
     private bool pulled = false;
+    private float currentGrabLength = 0.0f; //the time that the player has been holding down the grab button
+    private float grabTolerance = 0.5f; //the amount of time that the player can grab early and still catch an object if it reaches their hands
     private SteamVR_Input_Sources hand; //used to get which controller this script is using
     private Collider grabCollider; //the collider box for grabbing (what the object must be touching to be grabbed)
     private Collider playerCollider; //the collider of the player
@@ -52,7 +54,6 @@ public class vrPickupObject : MonoBehaviour {
         if (pullAmount < 0.5) {
             ReleaseObject();
         }
-        //Debug.Log(pullAmount);
     }
 
     //moves the object when grabbed
@@ -68,8 +69,11 @@ public class vrPickupObject : MonoBehaviour {
     private void checkGrab() {
         if (pullAmount >= 0.5) {
             pulled = true;
+            currentGrabLength += Time.deltaTime;
+            
         } else {
             ReleaseObject();
+            currentGrabLength = 0.0f;
         }
     }
 
@@ -121,7 +125,7 @@ public class vrPickupObject : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.tag == "grabbable") {
             //only grab if we do not already have an object
-            if (pulled == true && !grabbedObject) {
+            if (pulled == true && !grabbedObject && currentGrabLength <= grabTolerance) {
 
                 //creates an object that we child the picked up object to.  This will handle the actual movement of the object
                 // and allows us to preserve the offset of the grab since a child object will keep its offset when the parent rotates

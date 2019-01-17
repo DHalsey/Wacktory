@@ -17,6 +17,7 @@ public class boxSpawner : MonoBehaviour {
         if (currentTime >= spawnDelay) {
             GameObject boxClone;
             boxClone = Instantiate(cardboardBox, transform.position, transform.rotation);
+            boxClone.name = cardboardBox.name; //get rid of the "(clone)" from the name
             Destroy(boxClone, 30); //debug to destroy boxes after 30s to avoid a pileup
             currentTime = 0;
         }

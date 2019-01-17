@@ -20,6 +20,9 @@ public class hammerCrush : MonoBehaviour {
     public float raiseSpeed = 1.5f;
     public float coolDownSpeed = 1.0f;
 
+    private int currentSwings = 0;
+    private int swingsToBreak = 3;
+
     private float moveTime = 0f;
     private Vector3 currentAngle;
 
@@ -43,6 +46,11 @@ public class hammerCrush : MonoBehaviour {
 
         if (hammerDown || isBroken) SwingDown();
         if (hammerUp) SwingUp();
+
+        if (currentSwings>= swingsToBreak) {
+            Break();
+            currentSwings = 0;
+        }
     }
 
     void SwingDown() {
@@ -53,8 +61,9 @@ public class hammerCrush : MonoBehaviour {
             moveTime += Time.deltaTime * hammerSpeed;
             hammerReset = false;
 
-        } else {
+        } else {  
             if (isBroken) return; //Keep the hammer down if it is broken
+            currentSwings += 1;
             hammer.transform.eulerAngles = downAngle;
             hammerUp = true;
             hammerDown = false;

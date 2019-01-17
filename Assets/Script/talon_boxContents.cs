@@ -32,6 +32,7 @@ public class talon_boxContents : MonoBehaviour
     // Displays the contints 
     public void showContents() {
         contentsCopy = Instantiate(boxContains, transform.position, transform.rotation);
+        contentsCopy.name = boxContains.name; //remove "(Clone)" from the name
     }
 
     public void updateContentsPos(Vector3 newPos) {
