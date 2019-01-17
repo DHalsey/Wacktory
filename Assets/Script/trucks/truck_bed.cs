@@ -15,11 +15,15 @@ public class truck_bed : MonoBehaviour {
 	}
     private void OnTriggerEnter(Collider item)
     {
-        Debug.Log("calling on trigger");
         if(item.gameObject.layer == 8)
         {
+            //first we need to get the name of the object
             string itemName = item.gameObject.name;
-            GetComponentInParent<truckController>().addItem(itemName);
+            //once we have the name it is very likely the name has "nameOfObject(CLONE)" in it. To get rid of clone we split
+            //on '(' so we get an array of two strings nameOfObject at index 0 and CLONE) at index 1
+            //then we just take index 0
+            string[] itemID = itemName.Split('(');
+            GetComponentInParent<truckController>().addItem(itemID[0]);
             Destroy(item.gameObject);
         }
         

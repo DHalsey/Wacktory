@@ -8,9 +8,9 @@ public class truckController : MonoBehaviour
 
     public Truck thisTruck;
     public GameObject truckManager;
-    public GameObject windowStop;
-    public GameObject loadingStop;
-    public GameObject truck_end;
+    private GameObject windowStop;
+    private GameObject loadingStop;
+    private GameObject truck_end;
     public GameObject onScreenText;
     //list of all the possible items
     private List<string> itemList = new List<string>();
@@ -29,7 +29,11 @@ public class truckController : MonoBehaviour
     private bool loading = false;
     private bool end = false;
     private string truckStatus = "start";
-    
+
+    //positions for all the markers
+    private Vector3 windowPosition;
+    private Vector3 loadingPosition;
+    private Vector3 endPosition;
     // Use this for initialization
 
     void Start()
@@ -55,8 +59,15 @@ public class truckController : MonoBehaviour
         //at this point we have all the components for the construction of the truck
         thisTruck = new Truck(waitTime, groceryList, numItems);
 
+        //get all the instantiated objects and assign their positions to vec
         onScreenText = GameObject.Find("Canvas/truckText");
-        
+        windowStop = GameObject.Find("Truck_Window_stop");
+        loadingStop = GameObject.Find("Truck_Stop_Loading");
+        truck_end = GameObject.Find("end");
+        windowPosition = windowStop.transform.position;
+        loadingPosition = loadingStop.transform.position;
+        endPosition = truck_end.transform.position;
+
     }
 
     // Update is called once per frame
@@ -69,9 +80,9 @@ public class truckController : MonoBehaviour
             //Debug.Log("window is true and start");
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
-            transform.position = Vector3.Lerp(this.transform.position, windowStop.transform.position, fracJourney);
+            transform.position = Vector3.Lerp(this.transform.position, windowPosition, fracJourney);
             //once the truck has reached the window set status to ordering and wait
-            if (Vector3.Distance(transform.position, windowStop.transform.position) < .5f)
+            if (Vector3.Distance(transform.position, windowPosition) < .5f)
             {
                 window = false;
                 truckStatus = "ordering";
@@ -81,7 +92,7 @@ public class truckController : MonoBehaviour
         else if (truckStatus == "ordering")
         {
             //while the truck is ordering wait 5 seconds and then set status to waitForLoad
-            if (Time.time - startTime > 5f || thisTruck.numItems >= thisTruck.numItemsReq)
+            if (Time.time - startTime > 5f)
             {
                 truckStatus = "waitForLoad";
             }
@@ -92,9 +103,9 @@ public class truckController : MonoBehaviour
             truckStatus = "moving";
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
-            transform.position = Vector3.Lerp(this.transform.position, loadingStop.transform.position, fracJourney);
+            transform.position = Vector3.Lerp(this.transform.position, loadingPosition, fracJourney);
             //once the truck arrives at loading bay set status to loading
-            if (Vector3.Distance(transform.position, loadingStop.transform.position) < .5f)
+            if (Vector3.Distance(transform.position, loadingPosition) < .5f)
             {
                 loading = false;
                 truckStatus = "loading";
@@ -105,7 +116,7 @@ public class truckController : MonoBehaviour
         else if(truckStatus == "loading")
         {
             //wait until the timer expires at the loading bay (Later if we have received enough items)
-            if(Time.time - startTime > waitTime)
+            if(Time.time - startTime > waitTime || thisTruck.numItems >= thisTruck.numItemsReq)
             {
                 truckStatus = "complete";
                 onScreenText.GetComponent<Text>().text = "";
@@ -116,8 +127,8 @@ public class truckController : MonoBehaviour
             truckStatus = "moving";
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
-            transform.position = Vector3.Lerp(this.transform.position, truck_end.transform.position, fracJourney);
-            if (Vector3.Distance(transform.position, truck_end.transform.position) < .5f)
+            transform.position = Vector3.Lerp(this.transform.position, endPosition, fracJourney);
+            if (Vector3.Distance(transform.position, endPosition) < .5f)
             {
                 end = false;
                 //truckManager.GetComponent<truck_manager>().changeMovingStatus();
@@ -138,7 +149,7 @@ public class truckController : MonoBehaviour
         //Debug.Log("setting window to true");
         window = true;
         startTime = Time.time;
-        journeyLength = Vector3.Distance(this.transform.position, windowStop.transform.position);
+        journeyLength = Vector3.Distance(this.transform.position, windowPosition);
         //Debug.Log(journeyLength);
     }
     //sets the loading variable to true and sets timers for the lerp
@@ -146,14 +157,14 @@ public class truckController : MonoBehaviour
     {
         loading = true;
         startTime = Time.time;
-        journeyLength = Vector3.Distance(this.transform.position, loadingStop.transform.position);
+        journeyLength = Vector3.Distance(this.transform.position, loadingPosition);
     }
     //sets the end variable to true and sets timers for the lerp
     public void setMoveToEnd()
     {
         end = true;
         startTime = Time.time;
-        journeyLength = Vector3.Distance(this.transform.position, truck_end.transform.position);
+        journeyLength = Vector3.Distance(this.transform.position, endPosition);
     }
     //returns the string truckStatus
     public string getStatus()
@@ -163,7 +174,12 @@ public class truckController : MonoBehaviour
     //adds an item to the truck (called in the collider function)
     public void addItem(string itemID)
     {
-        Debug.Log("calling add item");
-        thisTruck.addItemToTruck(itemID);
+        
+        if(thisTruck.numItems < thisTruck.numItemsReq)
+        {
+            Debug.Log("adding item: " + itemID);
+            thisTruck.addItemToTruck(itemID);
+        }
+           
     }
 }

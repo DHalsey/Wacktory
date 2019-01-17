@@ -23,8 +23,7 @@ GameObject:
   - component: {fileID: 23588532588908090}
   - component: {fileID: 135921525378471216}
   - component: {fileID: 114971046151469140}
-  - component: {fileID: 114126641774666312}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Bomb
   m_TagString: grabbable
   m_Icon: {fileID: 0}
@@ -86,18 +85,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1179172756210700}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114126641774666312
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1179172756210700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ba891d1099c4a4ca9a355c81229d2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: Bomb
 --- !u!114 &114971046151469140
 MonoBehaviour:
   m_ObjectHideFlags: 1

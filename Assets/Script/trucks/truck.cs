@@ -57,11 +57,13 @@ public class Truck {
         if (itemsReceived.ContainsKey(item))
         {
             itemsReceived[item]++;
+            numItems++;
         }
         //if there is no entry for the item add it to the itemsReceived dictionary with value 1
         else
         {
             itemsReceived.Add(item, 1);
+            numItems++;
         }
     }
 
