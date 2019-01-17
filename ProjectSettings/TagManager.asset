@@ -18,12 +18,12 @@ TagManager:
   - UI
   - 
   - 
-  - Grabbable
+  - truck_bed
+  - Items
   - CouchHoldPosition
   - CouchPlayers
   - couchCameraRender
   - CouchPlayerGrounded
-  - 
   - 
   - 
   - 

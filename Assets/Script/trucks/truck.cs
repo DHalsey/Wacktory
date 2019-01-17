@@ -15,7 +15,7 @@ public class Truck {
     //dictionary to hold the number of each item the truck has received thus far
     private Dictionary<string, int> itemsReceived;
     //the total number of items the truck has received
-    private int numItemsReq;
+    public int numItemsReq;
 
 
     //Constructer takes in 3 parameters------------------------------------------------------------------------------------------

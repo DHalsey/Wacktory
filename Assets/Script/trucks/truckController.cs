@@ -81,7 +81,7 @@ public class truckController : MonoBehaviour
         else if (truckStatus == "ordering")
         {
             //while the truck is ordering wait 5 seconds and then set status to waitForLoad
-            if (Time.time - startTime > 5f)
+            if (Time.time - startTime > 5f || thisTruck.numItems >= thisTruck.numItemsReq)
             {
                 truckStatus = "waitForLoad";
             }
@@ -122,7 +122,7 @@ public class truckController : MonoBehaviour
                 end = false;
                 //truckManager.GetComponent<truck_manager>().changeMovingStatus();
                 truckStatus = "delete";
-                //Debug.Log(thisTruck.compareLists());
+                Debug.Log(thisTruck.compareLists());
             }
         }
         //else if(truckStatus == "delete")
@@ -159,5 +159,11 @@ public class truckController : MonoBehaviour
     public string getStatus()
     {
         return truckStatus;
+    }
+    //adds an item to the truck (called in the collider function)
+    public void addItem(string itemID)
+    {
+        Debug.Log("calling add item");
+        thisTruck.addItemToTruck(itemID);
     }
 }

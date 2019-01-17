@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33051754684893502}
   - component: {fileID: 23366767124499380}
   - component: {fileID: 65432434458251172}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Truck_Bed_Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +770,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1123827591631586}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

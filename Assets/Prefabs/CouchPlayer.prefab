@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 33827822227635254}
   - component: {fileID: 23395966014429052}
   - component: {fileID: 136547771650138916}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CouchPlayerPickUpCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 23217439767048350}
   - component: {fileID: 135237388948523152}
   - component: {fileID: 54984859842641238}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: CouchPlayerGroundCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4354420583216114}
   - component: {fileID: 135208433705226688}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: CouchPlayerHoldPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 4810894620166706}
   - component: {fileID: 33183306499772866}
   - component: {fileID: 23894479912771956}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CouchPlayerFace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 23328819038396774}
   - component: {fileID: 136496242293523356}
   - component: {fileID: 54809827802574368}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: CouchPlayer
   m_TagString: CouchPlayers
   m_Icon: {fileID: 0}
