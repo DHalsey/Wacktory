@@ -19,16 +19,16 @@ public class couchPlayerMovement : MonoBehaviour {
     [HideInInspector] public bool ragdolling; // When the player is ragdolling.
     
     // Left stick input
-    private string verticalMoveAxisName;
-    private string horizontalMoveAxisName;
+    public string verticalMoveAxisName;
+    public string horizontalMoveAxisName;
     private Vector3 movementInput; // Vector3 that holds the left stick input for this player
 
     // Right stick input
-    private string verticalTurnAxisName;
-    private string horizontalTurnAxisName;
+    public string verticalTurnAxisName;
+    public string horizontalTurnAxisName;
     private Vector3 turnInput; // Vector3 that holds the right stick input for this player
 
-    private string jumpButtonName;
+    public string jumpButtonName;
     private Rigidbody rb;
 
     [HideInInspector] public bool isGrounded;  // Checks if the player is on some level surface to jump from
@@ -42,6 +42,8 @@ public class couchPlayerMovement : MonoBehaviour {
 
     private void Awake()
     {
+        if(gameObject.GetComponentInChildren< couchPlayerInteract >() == null) { Debug.LogError("Cannot Access 'Couch Player Interact' script - It should be a script in CouchPlayerPIckupCollider"); } // Makes sure the code is there since it is used for interacting
+        //if (gameObject.GetComponent<couchPlayerInteract>() == null) { Debug.LogError("Cannot Access 'Couch Player Interact' script - It should be a script in CouchPlayerPIckupCollider"); } // Makes sure the code is there since it is used for interacting
         rb = GetComponent<Rigidbody>();
         isGrounded = false;
         jumped = false;
@@ -51,6 +53,9 @@ public class couchPlayerMovement : MonoBehaviour {
    
     private void Start()
     {
+        //gameObject.GetComponent<couchPlayerInteract>().interact
+        // need to change these to saved strings
+
         // Add the player's number to get the right input from the Input Manager
         verticalMoveAxisName = "VerticalMove" + playerNumber; 
         horizontalMoveAxisName = "HorizontalMove" + playerNumber;
@@ -94,7 +99,7 @@ public class couchPlayerMovement : MonoBehaviour {
     private void FixedUpdate()
     {
         // Handles movement and automatic turning.
-        if (!ragdolling)
+        if (!ragdolling || gameObject.GetComponent<couchPlayerInteract>().interact);
         {
             MovePlayer();
             TurnPlayer();
@@ -141,8 +146,8 @@ public class couchPlayerMovement : MonoBehaviour {
     // Handle automatic turning
     private void TurnPlayer()
     {
-        Debug.Log("Input X: " + movementInput.x);
-        Debug.Log("Input Z: " + movementInput.z);
+        //Debug.Log("Input X: " + movementInput.x);
+        //Debug.Log("Input Z: " + movementInput.z);
         float angleToTurnTo;
 
         // If movement is being applied from the input, calculate the angle that we need to turn to.
@@ -176,7 +181,7 @@ public class couchPlayerMovement : MonoBehaviour {
     // Only jump if we are grounded and have not already jumped (not in midair)
     private void Jump()
     {
-        if (isGrounded && !jumped)
+        if (isGrounded && !jumped && !gameObject.GetComponent<couchPlayerInteract>().interact)
         {
             jumped = true;
             rb.AddForce(Vector3.up * jumpForce);
