@@ -13,7 +13,7 @@ public class talon_rotateSlowly : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         obj = gameObject;
-        speed = 20.0f;
+        speed = 50.0f;
         slowAmt = 1.0f;
 	}
 
