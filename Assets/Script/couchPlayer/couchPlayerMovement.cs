@@ -13,7 +13,7 @@ public class couchPlayerMovement : MonoBehaviour {
     public float timeToGetUp = 3.0f;
 
     public string controllerType;
-    public ControllerMap inputMap;
+    public ControlScheme control;
 
     private Collider coll;
 
@@ -47,10 +47,11 @@ public class couchPlayerMovement : MonoBehaviour {
    
     private void Start()
     {
+        
         // Add the player's number to get the right input from the Input Manager
-        verticalAxisName = inputMap.VerticalMovementAxis + playerNumber; 
-        horizontalAxisName = inputMap.HorizontalMovementAxis + playerNumber;
-        jumpButtonName = inputMap.JumpButton + playerNumber;
+        verticalAxisName = control.VerticalMovement + playerNumber; 
+        horizontalAxisName = control.HorizontalMovement + playerNumber;
+        jumpButtonName = control.Jump + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         coll = GetComponent<Collider>();
@@ -220,4 +221,5 @@ public class couchPlayerMovement : MonoBehaviour {
         coll.material.dynamicFriction = 0.2f;
         coll.material.bounciness = 0.5f;
     }
+    
 }

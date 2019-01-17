@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class couchPlayerPickUp : MonoBehaviour {
-
     public float throwForce = 10.0f;
     public float pickupCooldown = 1.0f;
 
     public string controllerType;
-    public ControllerMap inputMap;
+    ControlScheme control;
 
     private float timestamp;
 
@@ -30,11 +29,13 @@ public class couchPlayerPickUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition");
         parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>();
+        control = transform.parent.GetComponent<couchPlayerMovement>().control;
 
-        holdButtonName = inputMap.InteractButton + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-        throwButtonName = inputMap.ThrowButton + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        holdButtonName = control.Interact + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        throwButtonName = control.Throw + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
 
         holdPositionCollider = holdPosition.GetComponent<SphereCollider>();
 	}
@@ -136,5 +137,4 @@ public class couchPlayerPickUp : MonoBehaviour {
             rbItem.AddForce(transform.parent.forward * throwForce, ForceMode.Impulse);
         }
     }
-    
 }
