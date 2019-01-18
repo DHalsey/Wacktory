@@ -61,7 +61,6 @@ public class combinerCombine : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.layer == LayerMask.NameToLayer("Grabbable")) {
             objectList.Add(other.gameObject);
-            Debug.Log(objectList.Count);
         }
     }
     private void OnTriggerStay(Collider other) {
