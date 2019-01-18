@@ -93,6 +93,7 @@ public class truckController : MonoBehaviour
         }
         else if (truckStatus == "ordering")
         {
+		
             //while the truck is ordering wait 5 seconds and then set status to waitForLoad
             if (Time.time - startTime > 5f)
             {
