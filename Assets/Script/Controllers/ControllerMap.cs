@@ -96,6 +96,48 @@ public class ControllerMap : ScriptableObject {
     //Use inverted axis where applicable
     public void OnEnable()
     {
+        while (true)
+        {
+            if (HorizontalLeft.Substring(HorizontalLeft.Length - Mathf.Min(HorizontalLeft.Length, 6)) == "Invert")
+                HorizontalLeft = HorizontalLeft.Substring(0, HorizontalLeft.Length - Mathf.Min(HorizontalLeft.Length, 6));
+            else break;
+        }
+
+        while (true)
+        {
+            if (VerticalLeft.Substring(VerticalLeft.Length - Mathf.Min(VerticalLeft.Length, 6)) == "Invert")
+                VerticalLeft = VerticalLeft.Substring(0, VerticalLeft.Length - Mathf.Min(VerticalLeft.Length, 6));
+            else break;
+        }
+
+        while (true)
+        {
+            if (HorizontalRight.Substring(HorizontalRight.Length - Mathf.Min(HorizontalRight.Length, 6)) == "Invert")
+                HorizontalRight = HorizontalRight.Substring(0, HorizontalRight.Length - Mathf.Min(HorizontalRight.Length, 6));
+            else break;
+        }
+
+        while (true)
+        {
+            if (VerticalRight.Substring(VerticalRight.Length - Mathf.Min(VerticalRight.Length, 6)) == "Invert")
+                VerticalRight = VerticalRight.Substring(0, VerticalRight.Length - Mathf.Min(VerticalRight.Length, 6));
+            else break;
+        }
+
+        while (true)
+        {
+            if (HorizontalDPad.Substring(HorizontalDPad.Length - Mathf.Min(HorizontalDPad.Length, 6)) == "Invert")
+                HorizontalDPad = HorizontalDPad.Substring(0, HorizontalDPad.Length - Mathf.Min(HorizontalDPad.Length, 6));
+            else break;
+        }
+
+        while (true)
+        {
+            if (VerticalDPad.Substring(VerticalDPad.Length - Mathf.Min(VerticalDPad.Length, 6)) == "Invert")
+                VerticalDPad = VerticalDPad.Substring(0, VerticalDPad.Length - Mathf.Min(VerticalDPad.Length, 6));
+            else break;
+        }
+
         if (InvertHL)
             HorizontalLeft += "Invert";
         if (InvertVL)
@@ -113,22 +155,5 @@ public class ControllerMap : ScriptableObject {
     //Switch back to uninverted axis where applicable
     public void OnDisable ()
     {
-        if (HorizontalLeft.Substring(HorizontalLeft.Length - Mathf.Min(HorizontalLeft.Length, 6)) == "Invert")
-            HorizontalLeft = HorizontalLeft.Substring(0, HorizontalLeft.Length - Mathf.Min(HorizontalLeft.Length, 6));
-
-        if (VerticalLeft.Substring(VerticalLeft.Length - Mathf.Min(VerticalLeft.Length, 6)) == "Invert")
-            VerticalLeft = VerticalLeft.Substring(0, VerticalLeft.Length - Mathf.Min(VerticalLeft.Length, 6));
-
-        if (HorizontalRight.Substring(HorizontalRight.Length - Mathf.Min(HorizontalRight.Length, 6)) == "Invert")
-            HorizontalRight = HorizontalRight.Substring(0, HorizontalRight.Length - Mathf.Min(HorizontalRight.Length, 6));
-
-        if (VerticalRight.Substring(VerticalRight.Length - Mathf.Min(VerticalRight.Length, 6)) == "Invert")
-            VerticalRight = VerticalRight.Substring(0, VerticalRight.Length - Mathf.Min(VerticalRight.Length, 6));
-
-        if (HorizontalDPad.Substring(HorizontalDPad.Length - Mathf.Min(HorizontalDPad.Length, 6)) == "Invert")
-            HorizontalDPad = HorizontalDPad.Substring(0, HorizontalDPad.Length - Mathf.Min(HorizontalDPad.Length, 6));
-
-        if (VerticalDPad.Substring(VerticalDPad.Length - Mathf.Min(VerticalDPad.Length, 6)) == "Invert")
-            VerticalDPad = VerticalDPad.Substring(0, VerticalDPad.Length - Mathf.Min(VerticalDPad.Length, 6));
     }
 }
