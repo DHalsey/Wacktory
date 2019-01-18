@@ -51,7 +51,7 @@ public class forkliftMovement : MonoBehaviour {
             }
         }
         // Turning rear wheel counter clockwise (left, towards +90deg) by wheel rotation amount 
-        if (Input.GetKey("d")) {
+        if (Input.GetKey("a")) {
             if(rearWheelRotation >= maxWheelRotation) {
                 rearWheelRotation = maxWheelRotation;
             }
@@ -59,7 +59,7 @@ public class forkliftMovement : MonoBehaviour {
                 rearWheelRotation += wheelRotationAmt;
 
                 // Updating rear wheel from new wheel rotation
-                rearWheel.transform.eulerAngles = new Vector3(0.0f, rearWheelRotation, 90.0f);
+                rearWheel.transform.eulerAngles += new Vector3(0.0f, wheelRotationAmt, 0.0f);
             }
 
             // Debug.Log("rearWheelRotation: " + rearWheelRotation);
@@ -74,7 +74,7 @@ public class forkliftMovement : MonoBehaviour {
             }
         }
         // Turning rear wheel clockwise (right, towards -90deg) by wheel rotation amount 
-        if (Input.GetKey("a")) {
+        if (Input.GetKey("d")) {
             if (rearWheelRotation <= -maxWheelRotation) {
                 rearWheelRotation = -maxWheelRotation;
             }
@@ -82,7 +82,7 @@ public class forkliftMovement : MonoBehaviour {
                 rearWheelRotation -= wheelRotationAmt;
 
                 // Updating rear wheel from new wheel rotation
-                rearWheel.transform.eulerAngles = new Vector3(0.0f, rearWheelRotation, 90.0f);
+                rearWheel.transform.eulerAngles += new Vector3(0.0f, -wheelRotationAmt, 0.0f);
             }
 
             // Debug.Log("rearWheelRotation: " + rearWheelRotation);

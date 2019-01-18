@@ -33,7 +33,7 @@ public class talon_CombinerSide : MonoBehaviour {
         if(other.gameObject.tag == neededItem.tag) {
             neededItemCount++;
 
-            textDisplay.GetComponent<TextMesh>().text = neededItemCount + " / " + howMany;;
+            textDisplay.GetComponent<TextMesh>().text = neededItemCount + " / " + howMany;
 
             if(neededItemCount >= howMany) {
                 textDisplay.GetComponent<TextMesh>().color = new Color(0.1f, 0.9f, 0.1f);
