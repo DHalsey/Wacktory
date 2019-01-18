@@ -390,19 +390,35 @@ Transform:
   m_Father: {fileID: 666131054}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!136 &631168199
-CapsuleCollider:
+--- !u!146 &631168199
+WheelCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 631168197}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5
+  m_SuspensionSpring:
+    spring: 35000
+    damper: 4500
+    targetPosition: 0.5
+  m_SuspensionDistance: 0.3
+  m_ForceAppPointDistance: 0
+  m_Mass: 20
+  m_WheelDampingRate: 0.25
+  m_ForwardFriction:
+    m_ExtremumSlip: 0.4
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 0.5
+    m_Stiffness: 1
+  m_SidewaysFriction:
+    m_ExtremumSlip: 0.2
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.5
+    m_AsymptoteValue: 0.75
+    m_Stiffness: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &631168200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -458,7 +474,6 @@ GameObject:
   - component: {fileID: 666131051}
   - component: {fileID: 666131055}
   - component: {fileID: 666131056}
-  - component: {fileID: 666131057}
   m_Layer: 0
   m_Name: Forklift
   m_TagString: Untagged
@@ -552,29 +567,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!114 &666131056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 666131050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75888283f154ad0488547392ec66c3f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSpeed: 1
-  wheelAngle: 0
-  forwardSpeed: 15
-  backwardSpeed: 8
-  accelRate: 0.05
-  decelRate: 0.01
-  leftStick: {x: 0, y: 0, z: 0}
-  rightStick: {x: 0, y: 0, z: 0}
-  rb: {fileID: 0}
---- !u!114 &666131057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -585,11 +580,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e656fd04836884f9628e7f31776fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rearWheelRotation: 0
   wheelRotationAmt: 0.5
-  IncSpeedForwardAmt: 0.1
-  IncSpeedBackwardsAmt: 0.05
-  maxForwardSpeed: 15
-  maxBackwardSpeed: -5
+  currentSpeed: 0
+  incrementSpeedAmt: 0.1
+  maxForwardSpeed: 1
+  maxBackwardSpeed: -1
   slowDownAmt: 0.01
 --- !u!1 &788565658
 GameObject:
