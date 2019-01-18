@@ -11,7 +11,7 @@ public class truckController : MonoBehaviour
     private GameObject windowStop;
     private GameObject loadingStop;
     private GameObject truck_end;
-    public GameObject onScreenText;
+    private GameObject onScreenText;
     //list of all the possible items
     private List<string> itemList = new List<string>();
     //total # of items the truck wants
