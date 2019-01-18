@@ -430,7 +430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bae497fa652f94686091a51fb7a4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 10
+  minThrowForce: 5
+  maxThrowForce: 20
+  chargeRate: 0.1
   pickupCooldown: 0.5
   heldItemPhysicMaterial: {fileID: 13400000, guid: 7d3def9324e7d1748bf35f50430ff533,
     type: 2}
