@@ -25,7 +25,7 @@ public class truckController : MonoBehaviour
     //start time for lerping purposes and distance
     private float startTime;
     float journeyLength;
-    private float speed = .05f;
+    private float speed = 1.5f;
     //if the object is moving towards the window/loading bay
     private bool window = false;
     private bool loading = false;
@@ -80,7 +80,7 @@ public class truckController : MonoBehaviour
         {
             truckStatus = "moving";
             //Debug.Log("window is true and start");
-            float distCovered = (Time.time - startTime) * speed;
+            float distCovered = (Time.time - startTime) * speed * Time.deltaTime;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(this.transform.position, windowPosition, fracJourney);
             //once the truck has reached the window set status to ordering and wait
@@ -103,7 +103,7 @@ public class truckController : MonoBehaviour
         else if(loading == true)
         {
             truckStatus = "moving";
-            float distCovered = (Time.time - startTime) * speed;
+            float distCovered = (Time.time - startTime) * speed * Time.deltaTime;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(this.transform.position, loadingPosition, fracJourney);
             //once the truck arrives at loading bay set status to loading
@@ -127,7 +127,7 @@ public class truckController : MonoBehaviour
         else if(end == true)
         {
             truckStatus = "moving";
-            float distCovered = (Time.time - startTime) * speed;
+            float distCovered = (Time.time - startTime) * speed * Time.deltaTime;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(this.transform.position, endPosition, fracJourney);
             if (Vector3.Distance(transform.position, endPosition) < .5f)
