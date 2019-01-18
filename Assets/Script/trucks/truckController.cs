@@ -25,7 +25,7 @@ public class truckController : MonoBehaviour
     //start time for lerping purposes and distance
     private float startTime;
     float journeyLength;
-    private float speed = 1.5f;
+    private float speed = 6f;
     //if the object is moving towards the window/loading bay
     private bool window = false;
     private bool loading = false;
@@ -94,7 +94,7 @@ public class truckController : MonoBehaviour
         else if (truckStatus == "ordering")
         {
             //while the truck is ordering wait 5 seconds and then set status to waitForLoad
-            if (Time.time - startTime > 5f)
+            if (Time.time - startTime > 3f)
             {
                 truckStatus = "waitForLoad";
             }
