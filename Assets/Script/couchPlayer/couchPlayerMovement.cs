@@ -20,22 +20,15 @@ public class couchPlayerMovement : MonoBehaviour {
     [HideInInspector] public bool explosion; // When the player is being affected by an explosion. This is accessed by the explosion.cs script
 
     [HideInInspector] public bool ragdolling; // When the player is ragdolling.
-    
-    // Left stick input
-    public string verticalMoveAxisName;
-    public string horizontalMoveAxisName;
-    private Vector3 movementInput; // Vector3 that holds the left stick input for this player
 
-    // Right stick input
-    public string verticalTurnAxisName;
-    public string horizontalTurnAxisName;
-    private Vector3 turnInput; // Vector3 that holds the right stick input for this player
-
-    public string jumpButtonName;
+    private string verticalAxisName;   // Name of controller vertical axis for this player
+    private string horizontalAxisName; // Name of controller horizontal axis for this player
+    private Vector3 movementInput;     // Vector3 that holds the controller input for this player
+    private string jumpButtonName;
     private Rigidbody rb;
 
-    [HideInInspector] public bool isGrounded;  // Checks if the player is on some level surface to jump from
-    [HideInInspector] public bool jumped;      // If player already jumped (is in midair)
+    [HideInInspector] public bool isGrounded;           // Checks if the player is on some level surface to jump from
+    [HideInInspector] public bool jumped;               // If player already jumped (is in midair)
 
     private IEnumerator ragdoll; // IEnumerator reference that we can use to check if the ragdoll coroutine is null
 
@@ -72,8 +65,7 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         // Store input to movementInput vector3 every frame.
-        movementInput = new Vector3(Input.GetAxis(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
-        turnInput = new Vector3(Input.GetAxis(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
+        movementInput = new Vector3(Input.GetAxisRaw(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
 
         // If the jump button is pressed, jump.
         // Could not use GetButtonDown properly sicne for some reason it would always allow player to double jump.
@@ -144,21 +136,10 @@ public class couchPlayerMovement : MonoBehaviour {
     }
 
     // Handle automatic turning
-    private void TurnPlayer()
-    {
-        //Debug.Log("Input X: " + movementInput.x);
-        //Debug.Log("Input Z: " + movementInput.z);
-        float angleToTurnTo;
-
+    private void TurnPlayer() {
         // If movement is being applied from the input, calculate the angle that we need to turn to.
-        if (turnInput.magnitude > 0f)
-        {
-            angleToTurnTo = calculateAngle(turnInput.x, turnInput.z);
-            turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
-        }
-        else if (movementInput.magnitude > 0f)
-        {
-            angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
+        if (movementInput.magnitude > 0f) {
+            float angleToTurnTo = calculateAngle(movementInput.x, movementInput.z);
             turnAngle = Quaternion.Euler(transform.rotation.x, angleToTurnTo, transform.rotation.z);
         }
 

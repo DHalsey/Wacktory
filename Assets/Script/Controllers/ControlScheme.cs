@@ -94,7 +94,6 @@ public class ControlScheme : ScriptableObject
         Throw = (string)map.GetType().GetField(ThrowButton).GetValue(map) + "p";
         HorizontalMovement = (string)map.GetType().GetField(HorizontalMovementAxis).GetValue(map) + "p";
         VerticalMovement = (string)map.GetType().GetField(VerticalMovementAxis).GetValue(map) + "p";
-        TauntButton = (string)map.GetType().GetField(Taunt).GetValue(map) + "p";
     }
 
 

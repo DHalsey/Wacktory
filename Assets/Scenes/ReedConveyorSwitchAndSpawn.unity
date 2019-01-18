@@ -1104,6 +1104,12 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114776577526947012, guid: 57b9be7efced58f4ea1a6a140ce18007,
+        type: 3}
+      propertyPath: control
+      value: 
+      objectReference: {fileID: 11400000, guid: 58adf4010f584094b85ec86d4c1220a5,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 3613760575640230571, guid: 57b9be7efced58f4ea1a6a140ce18007, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 57b9be7efced58f4ea1a6a140ce18007, type: 3}
@@ -1240,6 +1246,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickGlow: {fileID: 2100000, guid: 2cdffb052ffe35b4cb0372e631784d61, type: 2}
   colorActive: {r: 0.45580178, g: 1, b: 0.25, a: 0}
+  typeSwitch: 1
+  speedAnimation: 0.2
+  outputTransform: {fileID: 1170521537}
+  outputInitialRotation: {x: 0, y: 0, z: 0, w: 0}
+  outputRotation1: {x: 0, y: 0.3, z: 0, w: 1}
+  outputRotation2: {x: 0, y: -0.3, z: 0, w: 1}
 --- !u!136 &2099908260
 CapsuleCollider:
   m_ObjectHideFlags: 0

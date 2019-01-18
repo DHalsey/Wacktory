@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwForce: 10
   pickupCooldown: 0.5
+  controllerType: 
 --- !u!114 &7888789102558412448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8e3b0dbe23f4c44bf99c43c5259a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerType: 
   interact: 0
 --- !u!33 &33827822227635254
 MeshFilter:
@@ -373,7 +375,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4519238240511088}
   - component: {fileID: 114776577526947012}
-  - component: {fileID: 3613760575640230571}
   - component: {fileID: 33020023157884390}
   - component: {fileID: 23328819038396774}
   - component: {fileID: 136496242293523356}
@@ -422,29 +423,12 @@ MonoBehaviour:
   gravity: 3
   jumpForce: 600
   timeToGetUp: 3
+  control: {fileID: 0}
   explosion: 0
   ragdolling: 0
-  verticalMoveAxisName: 
-  horizontalMoveAxisName: 
-  verticalTurnAxisName: 
-  horizontalTurnAxisName: 
-  jumpButtonName: 
   isGrounded: 0
   jumped: 0
   physMat: {fileID: 13400000, guid: 7d3def9324e7d1748bf35f50430ff533, type: 2}
---- !u!114 &3613760575640230571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680585515003862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a8e3b0dbe23f4c44bf99c43c5259a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interact: 0
 --- !u!33 &33020023157884390
 MeshFilter:
   m_ObjectHideFlags: 0
