@@ -20,6 +20,7 @@ public class couchPlayerPickUp : MonoBehaviour {
     private float holdButtonInput;
 
     private string throwButtonName;
+    private float throwButtonInput;
 
     private SphereCollider holdPositionCollider;
 
@@ -39,6 +40,8 @@ public class couchPlayerPickUp : MonoBehaviour {
 	void Update () {
 
         holdButtonInput = Input.GetAxis(holdButtonName);
+        throwButtonInput = Input.GetAxis(throwButtonName);
+
         ragdolling = parentScript.ragdolling;
 
         // Check input for pickup. Only true if something isn't already picked up, pickup cooldown is over, and we're not ragdolling
@@ -60,7 +63,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         }
 
         // If the throw button is pressed
-        if (Input.GetButtonDown(throwButtonName) && heldItem != null)
+        if (throwButtonInput > 0.0f && heldItem != null)
         {
             Throw();
         }
@@ -96,13 +99,9 @@ public class couchPlayerPickUp : MonoBehaviour {
         {
             heldItem = item;
 
-            // Change the holdPosition's transform to fit the item's size.
-            Vector3 newHoldPosition = new Vector3(holdPosition.position.x + transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2, 
-                holdPosition.position.y, holdPosition.position.z + transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
-
-            holdPosition.position = newHoldPosition; // Move holdPosition to new position that accounts for item's size
+            holdPosition.transform.position = transform.parent.position + transform.parent.forward * (0.4f + (heldItem.GetComponent<Collider>().bounds.size.z / 2));
+            heldItem.transform.rotation = holdPosition.rotation;
             heldItem.transform.position = holdPosition.position; // Place item in the holdPosition
-            heldItem.transform.rotation = holdPosition.rotation; // Rotate item to match the holdPosition's rotation
             heldItem.transform.parent = holdPosition; // Change the item's parent to holdPosition so we can move it around properly.
 
             // Freeze all the item's rigidbody constraints so we can freely move the item as a child of the player.
@@ -116,9 +115,6 @@ public class couchPlayerPickUp : MonoBehaviour {
     private void Release()
     {
         pickup = false;
-        // Revert holdPosition back to where it was before picking up the item
-        Vector3 oldHoldPosition = new Vector3(holdPosition.position.x - transform.forward.x * heldItem.GetComponent<Collider>().bounds.size.z / 2,
-                holdPosition.position.y, holdPosition.position.z - transform.forward.z * heldItem.GetComponent<Collider>().bounds.size.z / 2);
         Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
         heldItem.transform.parent = null; // Reset the item's parent to stop it from moving with the player
         
@@ -128,7 +124,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         }
         heldItem.GetComponent<grabbableCollision>().held = false; // Stop the item from reacting in held mode in its grabbableCollision script
         heldItem = null; // Set heldItem back to null
-        holdPosition.position = oldHoldPosition; // Move holdPosition back to its old position.
+        holdPosition.transform.position = transform.parent.position + transform.parent.forward * 0.5f;
         timestamp = Time.time + pickupCooldown; // Take a timestamp of when the item was released in order to check the pickup cooldown
     }
 

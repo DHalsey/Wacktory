@@ -8,8 +8,12 @@ public class truckController : MonoBehaviour
 
     public Truck thisTruck;
     public GameObject truckManager;
-    
-    public GameObject onScreenText;
+
+    private GameObject windowStop;
+    private GameObject loadingStop;
+    private GameObject truck_end;
+    private GameObject onScreenText;
+
     //list of all the possible items
     private List<string> itemList = new List<string>();
     //total # of items the truck wants
@@ -32,9 +36,6 @@ public class truckController : MonoBehaviour
     private Vector3 windowPosition;
     private Vector3 loadingPosition;
     private Vector3 endPosition;
-    private GameObject windowStop;
-    private GameObject loadingStop;
-    private GameObject truck_end;
     // Use this for initialization
 
     void Start()
