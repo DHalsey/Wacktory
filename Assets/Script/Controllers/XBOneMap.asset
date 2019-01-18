@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb64c6bb44e41d478360a263bd1f05b, type: 3}
+  m_Name: XBOne
+  m_EditorClassIdentifier: 
+  HorizontalLeft: Horizontal
+  VerticalLeft: VerticalInvert
+  InvertHL: 0
+  InvertVL: 1
+  HorizontalRight: 4thAxis
+  VerticalRight: 5thAxisInvert
+  InvertHR: 0
+  InvertVR: 1
+  HorizontalDPad: 6thAxis
+  VerticalDPad: 7thAxis
+  InvertHD: 0
+  InvertVD: 0
+  BottomButton: button0
+  RightButton: button1
+  LeftButton: button2
+  TopButton: button3
+  RightBumper: button5
+  RightTrigger: 3rdAxisInvert
+  LeftBumper: button4
+  LeftTrigger: 3rdAxis
+  RightStick: button9
+  LeftStick: button8
+  StartButton: button7
+  SelectButton: button6
