@@ -8,14 +8,15 @@ public class Truck {
     public int timeWaited = 0;
     //the total number of items the truck is expecting
     public int numItems = 0;
+    //the total number of items the truck has received
+    public int numItemsReq;
 
     //PRIVATE VARIABLES=======================================
     //dictionary to hold the number of each item the truck needs
     private Dictionary<string, int> itemList;
     //dictionary to hold the number of each item the truck has received thus far
     private Dictionary<string, int> itemsReceived;
-    //the total number of items the truck has received
-    public int numItemsReq;
+    
 
 
     //Constructer takes in 3 parameters------------------------------------------------------------------------------------------
