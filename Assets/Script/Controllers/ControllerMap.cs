@@ -75,6 +75,7 @@ public class ControllerMap : ScriptableObject {
     public bool InvertHD = false;
     public bool InvertVD = false;
 
+
     [Header("Button Mapping")]
     //Face Buttons
     public string BottomButton = "button0"; 
@@ -92,52 +93,26 @@ public class ControllerMap : ScriptableObject {
     //Start and Select
     public string StartButton = "button7";
     public string SelectButton = "button6";
-    
-    //Use inverted axis where applicable
+
+
+
+    private string[] Axes;
     public void OnEnable()
     {
-        while (true)
+        //Switch back to uninverted axis where applicable
+        Axes = new string[]{HorizontalLeft, VerticalLeft, HorizontalRight, VerticalRight, HorizontalDPad, VerticalDPad};
+        for(int i = 0; i < Axes.Length; i++)
         {
-            if (HorizontalLeft.Substring(HorizontalLeft.Length - Mathf.Min(HorizontalLeft.Length, 6)) == "Invert")
-                HorizontalLeft = HorizontalLeft.Substring(0, HorizontalLeft.Length - Mathf.Min(HorizontalLeft.Length, 6));
-            else break;
+            while (true)
+            {
+                if (Axes[i].Substring(Axes[i].Length - Mathf.Min(Axes[i].Length, 6)) == "Invert")
+                    Axes[i] = Axes[i].Substring(0, Axes[i].Length - Mathf.Min(Axes[i].Length, 6));
+                else break;
+            }
         }
+        HorizontalLeft = Axes[0]; VerticalLeft = Axes[1]; HorizontalRight = Axes[2]; VerticalRight = Axes[3]; HorizontalDPad = Axes[4]; VerticalDPad = Axes[5];
 
-        while (true)
-        {
-            if (VerticalLeft.Substring(VerticalLeft.Length - Mathf.Min(VerticalLeft.Length, 6)) == "Invert")
-                VerticalLeft = VerticalLeft.Substring(0, VerticalLeft.Length - Mathf.Min(VerticalLeft.Length, 6));
-            else break;
-        }
-
-        while (true)
-        {
-            if (HorizontalRight.Substring(HorizontalRight.Length - Mathf.Min(HorizontalRight.Length, 6)) == "Invert")
-                HorizontalRight = HorizontalRight.Substring(0, HorizontalRight.Length - Mathf.Min(HorizontalRight.Length, 6));
-            else break;
-        }
-
-        while (true)
-        {
-            if (VerticalRight.Substring(VerticalRight.Length - Mathf.Min(VerticalRight.Length, 6)) == "Invert")
-                VerticalRight = VerticalRight.Substring(0, VerticalRight.Length - Mathf.Min(VerticalRight.Length, 6));
-            else break;
-        }
-
-        while (true)
-        {
-            if (HorizontalDPad.Substring(HorizontalDPad.Length - Mathf.Min(HorizontalDPad.Length, 6)) == "Invert")
-                HorizontalDPad = HorizontalDPad.Substring(0, HorizontalDPad.Length - Mathf.Min(HorizontalDPad.Length, 6));
-            else break;
-        }
-
-        while (true)
-        {
-            if (VerticalDPad.Substring(VerticalDPad.Length - Mathf.Min(VerticalDPad.Length, 6)) == "Invert")
-                VerticalDPad = VerticalDPad.Substring(0, VerticalDPad.Length - Mathf.Min(VerticalDPad.Length, 6));
-            else break;
-        }
-
+        //Use inverted axis where applicable
         if (InvertHL)
             HorizontalLeft += "Invert";
         if (InvertVL)
@@ -150,10 +125,5 @@ public class ControllerMap : ScriptableObject {
             HorizontalDPad += "Invert";
         if (InvertVD)
             VerticalDPad += "Invert";
-    }
-
-    //Switch back to uninverted axis where applicable
-    public void OnDisable ()
-    {
     }
 }
