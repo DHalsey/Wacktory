@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fb95d631773ff449828abdb59a9c525, type: 3}
   m_Name: XBOneScheme
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
+  map: {fileID: 11400000, guid: 2ccb98f6265598d458c8a9908a7bfc11, type: 2}
   HorizontalMovementAxis: HorizontalLeft
   VerticalMovementAxis: VerticalLeft
   JumpButton: BottomButton
   InteractButton: RightButton
   ThrowButton: LeftButton
-  HorizontalMovement: 
-  VerticalMovement: 
-  Jump: 
-  Interact: 
-  Throw: 
+  HorizontalMovement: Horizontalp
+  VerticalMovement: VerticalInvertInvertp
+  Jump: button0p
+  Interact: button1p
+  Throw: button2p

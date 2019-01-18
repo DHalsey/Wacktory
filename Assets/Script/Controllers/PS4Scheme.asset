@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fb95d631773ff449828abdb59a9c525, type: 3}
   m_Name: PS4Scheme
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
+  map: {fileID: 11400000, guid: cd3115db54041984f9be9948bff02bc8, type: 2}
   HorizontalMovementAxis: HorizontalLeft
   VerticalMovementAxis: VerticalLeft
   JumpButton: BottomButton
   InteractButton: RightButton
   ThrowButton: LeftButton
-  HorizontalMovement: 
-  VerticalMovement: 
-  Jump: 
-  Interact: 
-  Throw: 
+  HorizontalMovement: Horizontalp
+  VerticalMovement: VerticalInvertp
+  Jump: button1p
+  Interact: button2p
+  Throw: button0p

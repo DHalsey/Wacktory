@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9eb64c6bb44e41d478360a263bd1f05b, type: 3}
-  m_Name: XBOne
+  m_Name: XBOneMap
   m_EditorClassIdentifier: 
   HorizontalLeft: Horizontal
   VerticalLeft: VerticalInvert
   InvertHL: 0
   InvertVL: 1
   HorizontalRight: 4thAxis
-  VerticalRight: 5thAxisInvert
+  VerticalRight: 5thAxisInvertInvert
   InvertHR: 0
   InvertVR: 1
   HorizontalDPad: 6thAxis

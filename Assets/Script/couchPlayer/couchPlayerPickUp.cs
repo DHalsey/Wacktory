@@ -42,7 +42,6 @@ public class couchPlayerPickUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         holdButtonInput = Input.GetAxis(holdButtonName);
         ragdolling = parentScript.ragdolling;
 

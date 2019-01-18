@@ -16,8 +16,12 @@ public class buttonTrigger : MonoBehaviour {
     public Color btnBrokenColor;
     private Slider repairSlider;
 
+
+
+    private string interactButtonName = ""; //DEBUG
     // Use this for initialization
     void Start () {
+        interactButtonName = control.Interact + "1"; //DEBUG
         defaultLocalPosition = btn.transform.localPosition;
         btn.GetComponent<Renderer>().material.SetColor("_Color", btnColor);
         repairSlider = transform.Find("RepairSliderCanvas").gameObject.transform.Find("RepairSlider").gameObject.GetComponent<Slider>();
@@ -25,17 +29,12 @@ public class buttonTrigger : MonoBehaviour {
 
     private void Update() {
         DrawDebug();
+        
     }
 
     //temporary control to allow the repair by the player
     private void DrawDebug() {
-        if (Input.GetKeyDown(KeyCode.R)) {
-            repairProgress += 0.25f;
-            repairSlider.value = repairProgress;
-            if(repairSlider.value >= 1) {
-                isBroken = false;
-            }
-        }
+
     }
 
     // When triggered, button will press in towards the floor
@@ -52,9 +51,21 @@ public class buttonTrigger : MonoBehaviour {
         isPressed = true;
     }
 
+    public ControlScheme control;
+    
     // Will run as long as object is in button trigger
     private void OnTriggerStay(Collider other) {
-
+        
+        if (other.gameObject.tag == "CouchPlayers") {
+            if (Input.GetButtonDown(interactButtonName)) {
+                repairProgress += 0.25f;
+                repairSlider.value = repairProgress;
+                if (repairSlider.value >= 1) {
+                    isBroken = false;
+                }
+            }
+        }
+        
     }
 
     // When triggered, button will release; reutrning to original height

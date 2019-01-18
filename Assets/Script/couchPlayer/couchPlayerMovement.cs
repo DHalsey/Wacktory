@@ -68,7 +68,6 @@ public class couchPlayerMovement : MonoBehaviour {
         if (Input.GetAxis(jumpButtonName) > 0.0f)
         {
             Jump();
-            Debug.Log(Input.GetJoystickNames().Length);
         }
 
         // If there was an explosion, start ragdoll coroutine (ragdoll for some amount of time)
