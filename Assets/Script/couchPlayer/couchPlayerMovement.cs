@@ -181,8 +181,7 @@ public class couchPlayerMovement : MonoBehaviour {
     // Only jump if we are grounded and have not already jumped (not in midair)
     private void Jump()
     {
-        if (isGrounded && !jumped && !gameObject.GetComponent<couchPlayerInteract>().interact)
-        {
+        if (isGrounded && !jumped && !gameObject.transform.Find("CouchPlayerPickUpCollider").GetComponent<couchPlayerInteract>().interact) {
             jumped = true;
             rb.AddForce(Vector3.up * jumpForce);
         }

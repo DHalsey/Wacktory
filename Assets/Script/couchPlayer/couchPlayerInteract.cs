@@ -13,8 +13,8 @@ public class couchPlayerInteract : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // Input names for holding and throwing objects
-        interactButtonName = "Interact" + gameObject.transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-
+        interactButtonName = "Interact" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        //print("Interact" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber);
     }
 
     // Update is called once per frame
