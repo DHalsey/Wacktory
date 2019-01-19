@@ -12,7 +12,7 @@ public class couchPlayerMovement : MonoBehaviour {
     public float jumpForce = 350.0f;
     public float timeToGetUp = 3.0f;
 
-    public string controllerType;
+    
     public ControlScheme control;
 
     private Collider coll;

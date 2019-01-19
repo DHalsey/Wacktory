@@ -72,6 +72,7 @@ public class ControlScheme : ScriptableObject
     [SerializeField] private string JumpButton = "BottomButton";
     [SerializeField] private string InteractButton = "RightButton";
     [SerializeField] private string ThrowButton = "LeftButton";
+    [SerializeField] private string TauntButton = "TopButton";
 
     /*----HIDDEN PUBLIC STRINGS----*/
     //Directional Inputs
@@ -81,6 +82,7 @@ public class ControlScheme : ScriptableObject
     [HideInInspector] public string Jump;
     [HideInInspector] public string Interact;
     [HideInInspector] public string Throw;
+    [HideInInspector] public string Taunt;
 
     /*----ON ENABLE----*/
     //For explanation, this is setting your public strings equal to the strings available buttons in a ControllerMap.
@@ -92,5 +94,9 @@ public class ControlScheme : ScriptableObject
         Throw = (string)map.GetType().GetField(ThrowButton).GetValue(map) + "p";
         HorizontalMovement = (string)map.GetType().GetField(HorizontalMovementAxis).GetValue(map) + "p";
         VerticalMovement = (string)map.GetType().GetField(VerticalMovementAxis).GetValue(map) + "p";
+        TauntButton = (string)map.GetType().GetField(Taunt).GetValue(map) + "p";
     }
+
+
+
 }
