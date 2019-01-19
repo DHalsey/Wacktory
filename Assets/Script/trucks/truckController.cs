@@ -136,7 +136,7 @@ public class truckController : MonoBehaviour
                 end = false;
                 //truckManager.GetComponent<truck_manager>().changeMovingStatus();
                 truckStatus = "delete";
-                Debug.Log(thisTruck.compareLists());
+                //Debug.Log(thisTruck.compareLists());
             }
         }
         //else if(truckStatus == "delete")
@@ -180,7 +180,7 @@ public class truckController : MonoBehaviour
         
         if(thisTruck.numItems < thisTruck.numItemsReq)
         {
-            Debug.Log("adding item: " + itemID);
+            //Debug.Log("adding item: " + itemID);
             thisTruck.addItemToTruck(itemID);
         }
            
