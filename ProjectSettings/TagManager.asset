@@ -9,6 +9,7 @@ TagManager:
   - grabbable
   - opensBox
   - floor
+  - PalletTrigger
   layers:
   - Default
   - TransparentFX

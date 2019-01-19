@@ -9,7 +9,7 @@ public class forkTriggerCheck : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        forkHeightCheck = GameObject.Find("Forklift").GetComponent<forkliftMovement>().currentForkHeight;
+        // forkHeightCheck = GameObject.Find("Forklift").GetComponent<forkliftMovement>().currentForkHeight;
 	}
 
     public void OnTriggerEnter(Collider other) {
