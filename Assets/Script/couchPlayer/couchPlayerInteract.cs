@@ -1,4 +1,15 @@
-﻿using System.Collections;
+﻿//Reed Scriven - SolSearcher
+//CouchPlayerInteract.cs
+//
+//Functionality: 
+//  Allows the player to control and use the joystick to control an outcome in the game
+//
+//How to Attach:
+//  tbd
+//
+//Public Variables:
+//  tbd
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +35,7 @@ public class couchPlayerInteract : MonoBehaviour {
 
         // Input names for holding and throwing objects
         interactButtonName = control.Interact + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-    }
+    }   
 
     // Update is called once per frame
     void Update() {
@@ -40,12 +51,7 @@ public class couchPlayerInteract : MonoBehaviour {
             interact = true;
             interPressed = true;
         }
-        //if (interactButtonInput > 0.0f && interact && !interPressed) {
-        //    interact = false;
-        //    print("Interact = false");
-        //    interPressed = true;
 
-        //}
     }
 
     //Check if the interactable object is in front of us

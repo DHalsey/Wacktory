@@ -50,12 +50,10 @@ public class couchPlayerMovement : MonoBehaviour {
     private void Start()
     {
 
-        
         // Add the player's number to get the right input from the Input Manager
         verticalAxisName = control.VerticalMovement + playerNumber; 
         horizontalAxisName = control.HorizontalMovement + playerNumber;
         jumpButtonName = control.Jump + playerNumber;
-
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         coll = GetComponent<Collider>();
