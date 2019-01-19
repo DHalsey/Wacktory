@@ -11,12 +11,14 @@ public class couchPlayerPickUp : MonoBehaviour {
     private bool charging = false; // If a throw is being charged or not
 
     public float pickupCooldown = 1.0f; // Cooldown for picking up items (to avoid weird collision glitches)
+    ControlScheme control;
 
     private float timestamp; // Timestamp for calculating pick up cooldown
 
     private Transform holdPosition; // Position at which the item will be held
     private bool pickup = false; // Whether or not an item is picked up
     private bool joined = false; // Whether or not a joint between the hold position and item is made
+    private bool interPressed = false; //boolean check that is true when pressed and set to false once released
 
     private GameObject heldItem;
     private couchPlayerMovement parentScript;
@@ -30,19 +32,18 @@ public class couchPlayerPickUp : MonoBehaviour {
 
     public PhysicMaterial heldItemPhysicMaterial; // Physics material used to disable held item's friction and bounciness to reduce collision anomalies
 
-	// Use this for initialization
 	void Start () {
-        holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition"); // Set reference to CouchPlayerHoldPosition object in the player's children
-        parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>(); // Get the player's couchPlayerMovement script
 
-        // Input names for holding and throwing objects
-        holdButtonName = "Hold" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-        throwButtonName = "Throw" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition");
+        parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>();
+        control = transform.parent.GetComponent<couchPlayerMovement>().control;
+
+        holdButtonName = control.Interact + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        throwButtonName = control.Throw + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
 
         throwForce = minThrowForce;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
         holdButtonInput = Input.GetAxis(holdButtonName);
@@ -50,23 +51,26 @@ public class couchPlayerPickUp : MonoBehaviour {
 
         ragdolling = parentScript.ragdolling;
 
-        // Check input for pickup. Only true if something isn't already picked up, pickup cooldown is over, and we're not ragdolling
-        if (holdButtonInput > 0.0f && pickup == false && timestamp <= Time.time && !ragdolling)
+        if (holdButtonInput == 0)
+            interPressed = false;
+        if (holdButtonInput > 0.0f && pickup == false && timestamp <= Time.time && !ragdolling && interPressed == false)
         {
             pickup = true;
+            interPressed = true;
         }
-
+        
         // If we are holding an item, check for release/throw conditions
         if (heldItem != null)
         {
             // If the hold button is released or we start ragdolling, let go of the held item
-            if (holdButtonInput == 0 || ragdolling)
+            if ((holdButtonInput > 0f && !interPressed) || ragdolling)
             {
                 Release();
+                interPressed = true;
             }
             // If we press the throw button, start charging the throw. 
             // Else, if we are not pressing the throw button but charging is still true (AKA we let go of the throw button), throw item.
-            if (throwButtonInput > 0.5f)
+            if (Input.GetButton(throwButtonName))
             {
                 charging = true;
                 ChargeThrow();
@@ -85,9 +89,10 @@ public class couchPlayerPickUp : MonoBehaviour {
         if (pickup && heldItem == null && other.gameObject.tag == "grabbable")
         {
             PickUp(other.gameObject);
-            Debug.Log("Picked up: " + other.gameObject.name);
         }
     }
+
+    /*----PICK UP AND RELEASE----*/
 
     private void PickUp(GameObject item)
     {
@@ -136,12 +141,12 @@ public class couchPlayerPickUp : MonoBehaviour {
         holdPosition.transform.position = transform.parent.position + transform.parent.forward * (transform.parent.GetComponent<Collider>().bounds.size.z / 2);
         Rigidbody rbItem = heldItem.GetComponent<Rigidbody>();
 
-        Debug.Log("Released: " + heldItem.gameObject.name);
-
         heldItem = null; // Set heldItem back to null
 
         timestamp = Time.time + pickupCooldown; // Take a timestamp of when the item was released in order to check the pickup cooldown
     }
+
+    /*----THROWING ITEMS ----*/
 
     private void Throw()
     { 
@@ -174,6 +179,8 @@ public class couchPlayerPickUp : MonoBehaviour {
             throwForce += chargeRate;
         }
     }
+
+    /*----DRAWING CHARGE LINE FOR THROWING----*/
 
     // Draw line that indicates how much force a throw will have
     private void DrawThrowLine()

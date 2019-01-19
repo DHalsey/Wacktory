@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb64c6bb44e41d478360a263bd1f05b, type: 3}
+  m_Name: PokkenMap
+  m_EditorClassIdentifier: 
+  HorizontalLeft: N/A
+  VerticalLeft: N/A
+  InvertHL: 0
+  InvertVL: 0
+  HorizontalRight: N/A
+  VerticalRight: N/A
+  InvertHR: 0
+  InvertVR: 0
+  HorizontalDPad: 5thAxis
+  VerticalDPad: 6thAxis
+  InvertHD: 0
+  InvertVD: 0
+  BottomButton: button1
+  RightButton: button2
+  LeftButton: button0
+  TopButton: button3
+  RightBumper: button5
+  RightTrigger: button7
+  LeftBumper: button4
+  LeftTrigger: button6
+  RightStick: N/A
+  LeftStick: N/A
+  StartButton: button9
+  SelectButton: button8

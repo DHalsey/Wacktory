@@ -12,6 +12,9 @@ public class couchPlayerMovement : MonoBehaviour {
     public float jumpForce = 350.0f;
     public float timeToGetUp = 3.0f;
 
+    
+    public ControlScheme control;
+
     private Collider coll;
 
     [HideInInspector] public bool explosion; // When the player is being affected by an explosion. This is accessed by the explosion.cs script
@@ -51,14 +54,15 @@ public class couchPlayerMovement : MonoBehaviour {
    
     private void Start()
     {
+        
         // Add the player's number to get the right input from the Input Manager
-        verticalMoveAxisName = "VerticalMove" + playerNumber; 
-        horizontalMoveAxisName = "HorizontalMove" + playerNumber;
+        verticalMoveAxisName = control.VerticalMovement + playerNumber; 
+        horizontalMoveAxisName = control.HorizontalMovement + playerNumber;
 
-        verticalTurnAxisName = "VerticalTurn" + playerNumber;
-        horizontalTurnAxisName = "HorizontalTurn" + playerNumber;
+        verticalTurnAxisName = control.VerticalLook + playerNumber;
+        horizontalTurnAxisName = control.HorizontalLook + playerNumber;
 
-        jumpButtonName = "Jump" + playerNumber;
+        jumpButtonName = control.Jump + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         coll = GetComponent<Collider>();
@@ -110,7 +114,7 @@ public class couchPlayerMovement : MonoBehaviour {
 
     }
 
-    // Fucntion that finds the turn angle for the player based on their inputs 
+    // Function that finds the turn angle for the player based on their inputs 
     // From user "YoungDeveloper" in:
     // https://answers.unity.com/questions/1032673/how-to-get-0-360-degree-from-two-points.html
     // ----------------------------------------------------------------------------------------
@@ -213,4 +217,5 @@ public class couchPlayerMovement : MonoBehaviour {
         coll.material.dynamicFriction = 0.2f;
         coll.material.bounciness = 0.5f;
     }
+    
 }
