@@ -9,14 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4069098665259830}
-  - component: {fileID: 114488646844448722}
   - component: {fileID: 33487872763455344}
   - component: {fileID: 23696578647031190}
   - component: {fileID: 54121233138850466}
   - component: {fileID: 65245053080553662}
   - component: {fileID: 114300471255296880}
   - component: {fileID: 114970394236550422}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: cardboardBox
   m_TagString: grabbable
   m_Icon: {fileID: 0}

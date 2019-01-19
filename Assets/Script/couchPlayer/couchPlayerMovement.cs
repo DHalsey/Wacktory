@@ -59,8 +59,9 @@ public class couchPlayerMovement : MonoBehaviour {
         verticalMoveAxisName = control.VerticalMovement + playerNumber; 
         horizontalMoveAxisName = control.HorizontalMovement + playerNumber;
 
-        verticalTurnAxisName = control.VerticalRightStick + playerNumber;
-        horizontalTurnAxisName = control.HorizontalRightStick + playerNumber;
+        verticalTurnAxisName = control.VerticalLook + playerNumber;
+        horizontalTurnAxisName = control.HorizontalLook + playerNumber;
+
         jumpButtonName = control.Jump + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -71,8 +72,8 @@ public class couchPlayerMovement : MonoBehaviour {
 	private void Update()
     {
         // Store input to movementInput vector3 every frame.
-        movementInput = new Vector3(Input.GetAxis(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
-        turnInput = new Vector3(Input.GetAxis(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
+        movementInput = new Vector3(Input.GetAxisRaw(horizontalMoveAxisName), 0f, Input.GetAxis(verticalMoveAxisName));
+        turnInput = new Vector3(Input.GetAxisRaw(horizontalTurnAxisName), 0f, Input.GetAxis(verticalTurnAxisName));
 
         // If the jump button is pressed, jump.
         // Could not use GetButtonDown properly sicne for some reason it would always allow player to double jump.
@@ -113,7 +114,7 @@ public class couchPlayerMovement : MonoBehaviour {
 
     }
 
-    // Fucntion that finds the turn angle for the player based on their inputs 
+    // Function that finds the turn angle for the player based on their inputs 
     // From user "YoungDeveloper" in:
     // https://answers.unity.com/questions/1032673/how-to-get-0-360-degree-from-two-points.html
     // ----------------------------------------------------------------------------------------
@@ -205,6 +206,7 @@ public class couchPlayerMovement : MonoBehaviour {
         Quaternion resetAngle = Quaternion.identity;
         transform.rotation = Quaternion.Lerp(transform.rotation, resetAngle, turnSpeed);
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        transform.Find("CouchPlayerHoldPosition").transform.rotation = transform.rotation;
     }
 
     // Handles player death. Right now, it only disables the player's movement.

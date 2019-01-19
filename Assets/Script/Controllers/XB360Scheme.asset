@@ -14,11 +14,17 @@ MonoBehaviour:
   map: {fileID: 11400000, guid: 03492fb70a1b5f44e9932c88dcfdb642, type: 2}
   HorizontalMovementAxis: HorizontalLeft
   VerticalMovementAxis: VerticalLeft
+  HorizontalLookAxis: HorizontalRight
+  VerticalLookAxis: VerticalRight
   JumpButton: BottomButton
   InteractButton: RightButton
   ThrowButton: LeftButton
+  TauntButton: TopButton
   HorizontalMovement: Horizontalp
-  VerticalMovement: VerticalInvertInvertp
+  VerticalMovement: VerticalInvertp
+  HorizontalLook: 4thAxisp
+  VerticalLook: 5thAxisInvertp
   Jump: button0p
   Interact: button1p
   Throw: button2p
+  Taunt: 

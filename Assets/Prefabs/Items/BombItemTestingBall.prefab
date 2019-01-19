@@ -19,12 +19,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4140048690837368}
-  - component: {fileID: 114661432719237248}
   - component: {fileID: 33869524941105040}
   - component: {fileID: 23188948139470278}
   - component: {fileID: 135395478052170918}
   - component: {fileID: 54467329754420802}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BombItemTestingBall
   m_TagString: grabbable
   m_Icon: {fileID: 0}
@@ -101,18 +100,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114661432719237248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1182716871888638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab16ab1b5ae52a940b214d8ebc78d138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  held: 0
 --- !u!135 &135395478052170918
 SphereCollider:
   m_ObjectHideFlags: 1
