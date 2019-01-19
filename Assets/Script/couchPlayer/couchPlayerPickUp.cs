@@ -112,8 +112,9 @@ public class couchPlayerPickUp : MonoBehaviour {
             // Item ignores collision with player so that there aren't any crazy game-breaking rigidbody bugs like being launched at the speed of light
             Physics.IgnoreCollision(holdPosition.transform.parent.GetComponent<Collider>(), heldItem.GetComponent<Collider>(), true);
 
-            // To actually hold the object and use still use rigidbody physics, the item is held in place (holdPosition) with a FixedJoint. This tells Unity to keep calculating
-            // heldItem's rigidbody physics and to not force it through other objects like walls (something that would happen if we set it as a chiled of holdPosition instead)
+            // To actually hold the object and use still use rigidbody physics, the item is held in place (holdPosition) with a FixedJoint. 
+            // This tells Unity to keep calculating heldItem's rigidbody physics and to not force it through other objects like walls 
+            // (something that would happen if we set it as a chiled of holdPosition instead)
             heldItem.AddComponent<FixedJoint>();
             FixedJoint fixJoint = heldItem.GetComponent<FixedJoint>();
             fixJoint.GetComponent<FixedJoint>().connectedBody = holdPosition.GetComponent<Rigidbody>();
@@ -146,7 +147,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         timestamp = Time.time + pickupCooldown; // Take a timestamp of when the item was released in order to check the pickup cooldown
     }
 
-    /*----THROWING ITEMS ----*/
+    /*----THROWING ITEMS----*/
 
     private void Throw()
     { 
@@ -189,15 +190,16 @@ public class couchPlayerPickUp : MonoBehaviour {
         // If not, create a new one and set its attributes.
         LineRenderer line = holdPosition.gameObject.GetComponent<LineRenderer>();
         if (!line)
-        { 
+        {
             line = holdPosition.gameObject.AddComponent<LineRenderer>(); // Add LineRenderer component to holdPosition
             line.positionCount = 2; // How many points in the line
             line.useWorldSpace = true; // If the line's positions are treated as world coordinates or relative to the game object its a part of
-            line.startWidth = 0.1f; // Width of start of the line
-            line.endWidth = 0.15f; // Width of end of the line
+            line.startWidth = 0.05f; // Width of start of the line
+            line.endWidth = 0.1f; // Width of end of the line
             line.numCapVertices = 10; // Number of vertices at the ends (affects how round the ends are)
             line.SetPosition(0, holdPosition.transform.position); // Position of first point in line
-            line.material = new Material(Shader.Find("Sprites/Default")); // Sets line's material to default material (so we can add colors to it, otherwise it defaults to gross pink)
+            line.SetPosition(1, line.GetPosition(0) + transform.parent.forward * (throwForce / 15)); // Position of the second point in line
+            line.material = new Material(Shader.Find("Sprites/Default")); // Sets line's material to default material (so we can add colors to it, otherwise it uses gross pink)
             line.startColor = new Color(255, 212, 0); // Color for the start of the line (not working)
             line.endColor = new Color(255, 0, 0); // Color for the end of the line (not working)
         }
@@ -205,7 +207,7 @@ public class couchPlayerPickUp : MonoBehaviour {
         {
             line.SetPosition(0, holdPosition.transform.position); // Set position of the start of the line every frame so it moves with the player
             line.SetPosition(1, line.GetPosition(0) + transform.parent.forward * (throwForce / 15)); // Set position of end of the line (simply add a vector relative to the throwForce so it grows every frame)
-            line.endWidth += 0.0025f; // Increase the width of the end to make it thicker the longer it charges.
+            line.endWidth += 0.0015f; // Increase the width of the end to make it thicker the longer it charges.
         }
     }
 
