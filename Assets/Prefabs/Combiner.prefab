@@ -515,7 +515,7 @@ Transform:
   m_GameObject: {fileID: 1600705205075640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.9356014, y: -0.9438596, z: -14.692896}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4808900130908550}
   m_Father: {fileID: 0}
@@ -1636,6 +1636,8 @@ MonoBehaviour:
   howMany: 7
   buttonForCombining: {fileID: 1575940690533376}
   textDisplay: {fileID: 1973543980205302}
+  testItemOutput: {fileID: 0}
+  outputLocation: {fileID: 0}
   hasBeenCombined: 0
 --- !u!114 &114661328522412330
 MonoBehaviour:
@@ -1652,6 +1654,8 @@ MonoBehaviour:
   howMany: 4
   buttonForCombining: {fileID: 1575940690533376}
   textDisplay: {fileID: 1558485897611338}
+  testItemOutput: {fileID: 0}
+  outputLocation: {fileID: 0}
   hasBeenCombined: 0
 --- !u!114 &114801262066805650
 MonoBehaviour:
@@ -1664,10 +1668,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0bc2e11ab532b44b5ad0d7f7b16616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btn: {fileID: 0}
   isPressed: 0
-  btnPressAmt: 0.17
+  isBroken: 0
   btnColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0}
-  btnBaseColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0}
+  btnBrokenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114955432644554374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1679,10 +1684,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0bc2e11ab532b44b5ad0d7f7b16616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btn: {fileID: 0}
   isPressed: 0
-  btnPressAmt: 0.17
+  isBroken: 0
   btnColor: {r: 0, g: 0, b: 0, a: 0}
-  btnBaseColor: {r: 0, g: 0, b: 0, a: 0}
+  btnBrokenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!136 &136065286066542354
 CapsuleCollider:
   m_ObjectHideFlags: 1

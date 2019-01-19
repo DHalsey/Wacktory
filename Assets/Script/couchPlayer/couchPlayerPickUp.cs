@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class couchPlayerPickUp : MonoBehaviour {
-
     public float throwForce = 10.0f;
     public float pickupCooldown = 1.0f;
 
-    private float timestamp; // Timestamp for calculating pick up cooldown
+    public string controllerType;
+    ControlScheme control;
+
+    private float timestamp;
 
     private Transform holdPosition; // Position at which the item will be held
     private bool pickup = false;
+    private bool interPressed = false; //boolean check that is true when pressed and set to false once released
+
 
     private GameObject heldItem;
     private couchPlayerMovement parentScript;
@@ -26,28 +30,30 @@ public class couchPlayerPickUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition"); // Set reference to CouchPlayerHoldPosition object in the player's children
-        parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>(); // Get the player's couchPlayerMovement script
 
-        // Input names for holding and throwing objects
-        holdButtonName = "Hold" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
-        throwButtonName = "Throw" + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        holdPosition = gameObject.transform.parent.Find("CouchPlayerHoldPosition");
+        parentScript = gameObject.transform.parent.GetComponent<couchPlayerMovement>();
+        control = transform.parent.GetComponent<couchPlayerMovement>().control;
+
+        holdButtonName = control.Interact + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
+        throwButtonName = control.Throw + transform.parent.GetComponent<couchPlayerMovement>().playerNumber;
 
         holdPositionCollider = holdPosition.GetComponent<SphereCollider>(); // Get a reference to the holdPosition's collider in order to disable/enable it accordingly
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
         holdButtonInput = Input.GetAxis(holdButtonName);
         throwButtonInput = Input.GetAxis(throwButtonName);
 
         ragdolling = parentScript.ragdolling;
 
-        // Check input for pickup. Only true if something isn't already picked up, pickup cooldown is over, and we're not ragdolling
-        if (holdButtonInput > 0.0f && pickup == false && timestamp <= Time.time && !ragdolling)
+        if (holdButtonInput == 0)
+            interPressed = false;
+        if (holdButtonInput > 0.0f && pickup == false && timestamp <= Time.time && !ragdolling && interPressed == false)
         {
             pickup = true;
+            interPressed = true;
         }
 
         // If we start to ragdoll while holding an item, let go of the item
@@ -56,10 +62,10 @@ public class couchPlayerPickUp : MonoBehaviour {
             Release();
         }
 
-        // If we let go of the hold button and we are holding an item, let go of it.
-        if (holdButtonInput == 0 && heldItem != null)
+        if (holdButtonInput > 0 && heldItem != null && interPressed == false)
         {
             Release();
+            interPressed = true;
         }
 
         // If the throw button is pressed
@@ -138,5 +144,4 @@ public class couchPlayerPickUp : MonoBehaviour {
             rbItem.AddForce(transform.parent.forward * throwForce, ForceMode.Impulse);
         }
     }
-    
 }
