@@ -39,7 +39,7 @@ public class joystickSwitch : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        colorInactive = joystickGlow.color;
+        //colorInactive = joystickGlow.color;
         outputInitialRotation = outputTransform.rotation.eulerAngles;
     }
 
