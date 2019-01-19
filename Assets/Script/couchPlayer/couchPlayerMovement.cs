@@ -56,8 +56,11 @@ public class couchPlayerMovement : MonoBehaviour {
     {
         
         // Add the player's number to get the right input from the Input Manager
-        verticalAxisName = control.VerticalMovement + playerNumber; 
-        horizontalAxisName = control.HorizontalMovement + playerNumber;
+        verticalMoveAxisName = control.VerticalMovement + playerNumber; 
+        horizontalMoveAxisName = control.HorizontalMovement + playerNumber;
+
+        verticalTurnAxisName = control.VerticalRightStick + playerNumber;
+        horizontalTurnAxisName = control.HorizontalRightStick + playerNumber;
         jumpButtonName = control.Jump + playerNumber;
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -141,8 +144,6 @@ public class couchPlayerMovement : MonoBehaviour {
     // Handle automatic turning
     private void TurnPlayer()
     {
-        Debug.Log("Input X: " + movementInput.x);
-        Debug.Log("Input Z: " + movementInput.z);
         float angleToTurnTo;
 
         // If movement is being applied from the input, calculate the angle that we need to turn to.

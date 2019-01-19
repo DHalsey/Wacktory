@@ -67,6 +67,8 @@ public class ControlScheme : ScriptableObject
     [Header("Directional Inputs")]
     [SerializeField] private string HorizontalMovementAxis = "HorizontalLeft";
     [SerializeField] private string VerticalMovementAxis = "VerticalLeft";
+    [SerializeField] private string HorizontalRightStickAxis = "HorizontalRight";
+    [SerializeField] private string VerticalRightStickAxis = "VerticalRight";
 
     [Header("Button Inputs")]
     [SerializeField] private string JumpButton = "BottomButton";
@@ -78,6 +80,8 @@ public class ControlScheme : ScriptableObject
     //Directional Inputs
     [HideInInspector] public string HorizontalMovement;
     [HideInInspector] public string VerticalMovement;
+    [HideInInspector] public string HorizontalRightStick;
+    [HideInInspector] public string VerticalRightStick;
     //Button Inputs
     [HideInInspector] public string Jump;
     [HideInInspector] public string Interact;
@@ -94,7 +98,9 @@ public class ControlScheme : ScriptableObject
         Throw = (string)map.GetType().GetField(ThrowButton).GetValue(map) + "p";
         HorizontalMovement = (string)map.GetType().GetField(HorizontalMovementAxis).GetValue(map) + "p";
         VerticalMovement = (string)map.GetType().GetField(VerticalMovementAxis).GetValue(map) + "p";
-        TauntButton = (string)map.GetType().GetField(Taunt).GetValue(map) + "p";
+        HorizontalRightStick = (string)map.GetType().GetField(HorizontalRightStickAxis).GetValue(map) + "p";
+        VerticalRightStick = (string)map.GetType().GetField(VerticalRightStickAxis).GetValue(map) + "p";
+        Taunt = (string)map.GetType().GetField(TauntButton).GetValue(map) + "p";
     }
 
 
