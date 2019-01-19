@@ -6,14 +6,13 @@ public class couchPlayerPickUp : MonoBehaviour {
     public float throwForce = 10.0f;
     public float pickupCooldown = 1.0f;
 
-    public string controllerType;
     ControlScheme control;
 
     private float timestamp;
 
     private Transform holdPosition;
     private bool pickup = false;
-    private bool interPressed = false; //boolean check that is true when pressed and set to false once released
+    public bool interPressed = false; //boolean check that is true when pressed and set to false once released
 
 
     private GameObject heldItem;

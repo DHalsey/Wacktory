@@ -6,21 +6,21 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fb95d631773ff449828abdb59a9c525, type: 3}
-  m_Name: PokkenScheme
+  m_Name: XB360Scheme1
   m_EditorClassIdentifier: 
-  map: {fileID: 11400000, guid: bc55eb661f220574f9dac02bcee8e7c6, type: 2}
-  HorizontalMovementAxis: HorizontalDPad
-  VerticalMovementAxis: VerticalDPad
+  map: {fileID: 11400000, guid: 03492fb70a1b5f44e9932c88dcfdb642, type: 2}
+  HorizontalMovementAxis: HorizontalLeft
+  VerticalMovementAxis: VerticalLeft
   JumpButton: BottomButton
   InteractButton: RightButton
   ThrowButton: LeftButton
   TauntButton: TopButton
-  HorizontalMovement: 5thAxisp
-  VerticalMovement: 6thAxisp
-  Jump: button1p
-  Interact: button2p
-  Throw: button0p
+  HorizontalMovement: Horizontalp
+  VerticalMovement: VerticalInvertp
+  Jump: button0p
+  Interact: button1p
+  Throw: button2p
   Taunt: 

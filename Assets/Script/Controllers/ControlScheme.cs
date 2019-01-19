@@ -19,7 +19,7 @@ using UnityEngine;
         To create a new input altogether, there's a small process:
             1. Declare a serialized private string as shown below and instantiate it
                to one of the AVAILABLE INPUTS, this will be the default.
-            2. Declare a hidden public string as with the desired name as shown below.
+            2. Declare a hidden public string with the desired name as shown below.
             3. Copy and paste one of the lines in OnEnable(), replace the public 
                variable on the left with your new one, and the private variable
                found in GetField() toward the center-right with your new private 
@@ -60,8 +60,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ControlScheme", menuName = "Controller/Create Control Scheme")]
 public class ControlScheme : ScriptableObject
 {
-
-    public ControllerMap map;
+    
+    [SerializeField] private ControllerMap map;
 
     /*----SERIALIZED PRIVATE STRINGS----*/
     [Header("Directional Inputs")]
@@ -87,6 +87,7 @@ public class ControlScheme : ScriptableObject
     /*----ON ENABLE----*/
     //For explanation, this is setting your public strings equal to the strings available buttons in a ControllerMap.
     //Choice of available buttons can be specified in the editor.
+    //The "p" is for legibility in the input manager
     void OnEnable()
     {
         Jump = (string)map.GetType().GetField(JumpButton).GetValue(map) + "p";
@@ -94,7 +95,7 @@ public class ControlScheme : ScriptableObject
         Throw = (string)map.GetType().GetField(ThrowButton).GetValue(map) + "p";
         HorizontalMovement = (string)map.GetType().GetField(HorizontalMovementAxis).GetValue(map) + "p";
         VerticalMovement = (string)map.GetType().GetField(VerticalMovementAxis).GetValue(map) + "p";
-        TauntButton = (string)map.GetType().GetField(Taunt).GetValue(map) + "p";
+        Taunt = (string)map.GetType().GetField(TauntButton).GetValue(map) + "p";
     }
 
 
