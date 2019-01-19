@@ -9,7 +9,6 @@ TagManager:
   - grabbable
   - opensBox
   - floor
-  - PalletTrigger
   layers:
   - Default
   - TransparentFX
@@ -19,12 +18,12 @@ TagManager:
   - UI
   - 
   - 
+  - Items
   - 
   - 
   - CouchPlayers
   - couchCameraRender
   - CouchPlayerGrounded
-  - 
   - 
   - 
   - 

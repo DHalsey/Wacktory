@@ -1810,6 +1810,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315926949}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &336942991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1345059616646490, guid: 755dea29314e702408d1f0fad2fc5ee9,
+    type: 3}
+  m_PrefabInstance: {fileID: 955775942}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &341741206
 GameObject:
   m_ObjectHideFlags: 0
@@ -8987,6 +8993,16 @@ PrefabInstance:
       propertyPath: button
       value: 
       objectReference: {fileID: 346094900}
+    - target: {fileID: 114573674602653650, guid: 755dea29314e702408d1f0fad2fc5ee9,
+        type: 3}
+      propertyPath: hammer
+      value: 
+      objectReference: {fileID: 336942991}
+    - target: {fileID: 114573674602653650, guid: 755dea29314e702408d1f0fad2fc5ee9,
+        type: 3}
+      propertyPath: downAngle.z
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 136405166250828326, guid: 755dea29314e702408d1f0fad2fc5ee9,
         type: 3}
       propertyPath: m_IsTrigger
