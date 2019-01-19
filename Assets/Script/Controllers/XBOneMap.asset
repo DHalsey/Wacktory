@@ -16,7 +16,7 @@ MonoBehaviour:
   InvertHL: 0
   InvertVL: 1
   HorizontalRight: 4thAxis
-  VerticalRight: 5thAxisInvertInvert
+  VerticalRight: 5thAxisInvert
   InvertHR: 0
   InvertVR: 1
   HorizontalDPad: 6thAxis
