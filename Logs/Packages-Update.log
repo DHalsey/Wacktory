@@ -1,9 +1,13 @@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 === Fri Jan 18 18:27:29 2019
 =======
 === Thu Jan 17 14:42:23 2019
 >>>>>>> c39036b8a8bb775f3c07aacd0206847a7a9437c6
+=======
+=== Tue Jan 15 00:49:07 2019
+>>>>>>> e9130bd1587bdf414cda83b3e7dd2f3ea1ea4c0b
 
 Packages were changed.
 Update Mode: updateDependencies
@@ -12,9 +16,13 @@ The following packages were added:
   com.unity.collab-proxy@1.2.15
 The following packages were updated:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   com.unity.ads from version 2.0.8 to 2.3.1
 >>>>>>> c39036b8a8bb775f3c07aacd0206847a7a9437c6
+=======
+  com.unity.ads from version 2.0.8 to 2.3.1
+>>>>>>> e9130bd1587bdf414cda83b3e7dd2f3ea1ea4c0b
   com.unity.analytics from version 2.0.16 to 3.2.2
   com.unity.package-manager-ui from version 1.9.11 to 2.0.3
   com.unity.textmeshpro from version 1.2.4 to 1.3.0

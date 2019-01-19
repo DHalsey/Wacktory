@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class talon_playSound : MonoBehaviour {
+    /*
     public AudioClip soundToPlay;
     public AudioSource audio;
     public GameObject triggerCombined;
@@ -22,4 +23,5 @@ public class talon_playSound : MonoBehaviour {
             audio.PlayOneShot(soundToPlay);
         }
 	}
+    */
 }

@@ -9,6 +9,7 @@ TagManager:
   - grabbable
   - opensBox
   - floor
+  - Interactable
   layers:
   - Default
   - TransparentFX
